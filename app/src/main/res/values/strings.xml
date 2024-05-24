@@ -8,4 +8,11 @@
     <string name="regis_university_msse667_web_mobile_frameworks">Regis University, MSSE667 - Web Mobile Frameworks</string>
     <string name="dashboard_screen">Dashboard Screen</string>
 
+    <string name='login'>Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="confirmPass">Confirm Password</string>
+    <string name="registerHere">Click to register</string>
+    <string name="loginNow">Already have an account? Sign in here.</string>
 </resources>
