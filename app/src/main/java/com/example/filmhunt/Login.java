@@ -30,10 +30,10 @@ public class Login extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in. If logged in, open MainActivity
+        // Check if user is signed in. If logged in, open Dashboard
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), Dashboard.class);
             startActivity(intent);
             finish();
         }
@@ -69,25 +69,27 @@ public class Login extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(email)) {
                     Toast.makeText(Login.this, "Please enter email.", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
                     Toast.makeText(Login.this, "Please enter password.", Toast.LENGTH_SHORT ).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                mAuth.createUserWithEmailAndPassword(email, password)
+                mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
+                                    // Sign in success, redirect user to Dashboard
                                     Toast.makeText(getApplicationContext(), "Login successful.",
                                             Toast.LENGTH_SHORT).show();
 
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    Intent intent = new Intent(getApplicationContext(), Dashboard.class);
                                     startActivity(intent);
                                     finish();
 
@@ -98,7 +100,6 @@ public class Login extends AppCompatActivity {
                                 }
                             }
                         });
-
             }
         });
 
