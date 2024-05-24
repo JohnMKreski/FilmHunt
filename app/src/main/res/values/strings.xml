@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FilmHunt</string>
+    <string name="splash_title">FilmHunt</string>
+    <string name="your_ultimate_movie_search_engine">Your Ultimate Movie Search Engine.</string>
+    <string name="find_a_film">Find A Film</string>
+    <string name="background_image">Background Image</string>
+    <string name="logo">Logo</string>
+    <string name="regis_university_msse667_web_mobile_frameworks">Regis University, MSSE667 - Web Mobile Frameworks</string>
+    <string name="dashboard_screen">Dashboard Screen</string>
+
 </resources>
