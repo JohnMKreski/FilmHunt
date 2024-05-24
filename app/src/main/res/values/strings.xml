@@ -15,4 +15,5 @@
     <string name="confirmPass">Confirm Password</string>
     <string name="registerHere">Click to register</string>
     <string name="loginNow">Already have an account? Sign in here.</string>
+    <string name="logout">Logout</string>
 </resources>
