@@ -16,4 +16,12 @@
     <string name="registerHere">Click to register</string>
     <string name="loginNow">Already have an account? Sign in here.</string>
     <string name="logout">Logout</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="new_user_sign_up">New User? Sign Up</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="settings">Settings</string>
+
+
 </resources>

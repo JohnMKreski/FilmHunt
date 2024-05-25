@@ -1,10 +1,14 @@
 package com.example.filmhunt;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +29,15 @@ public class Login extends AppCompatActivity {
     Button loginButton;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
-    TextView textView;
+    TextView textView, logo_text, subheader;
+    ImageView logo;
+
 
     @Override
     public void onStart() {
         super.onStart();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         // Check if user is signed in. If logged in, open Dashboard
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
@@ -43,6 +51,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Hooks
         editEmail = findViewById(R.id.email);
         editPassword = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginBtn);
@@ -50,12 +60,25 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
 
+        logo = findViewById(R.id.logo);
+        logo_text = findViewById(R.id.logo_text);
+        subheader = findViewById(R.id.subheader);
+
+
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Register.class);
-                startActivity(intent);
-                finish();
+                Intent intent = new Intent(Login.this, Register.class);
+
+                Pair[] pairs = new Pair[3];
+                pairs[0] = new Pair<View, String>(logo, "logo_image");
+                pairs[1] = new Pair<View, String>(logo_text, "logo_text");
+                pairs[2] = new Pair<View, String>(subheader, "subheader");
+
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Login.this,pairs);
+                startActivity(intent, options.toBundle());
             }
         });
 

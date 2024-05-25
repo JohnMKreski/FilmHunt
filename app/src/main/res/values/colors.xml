@@ -8,6 +8,36 @@
     <color name="light_blue">#f1f2f6</color>
     <color name="dark_red">#6B9E0000</color>
     <color name="red">#8DAE1322</color>
+    <color name="backgroundColor">#000000</color>
+
+    <!-- Input Field-->
+    <color name="transparent_white">#19FFFFFF</color>
+
+
+
+
+    <!--  Button Stuff  -->
+    <color name="outlineColor">#4F242424</color>
+
+    <!-- Light Theme Colors -->
+    <color name="primaryColorLight">#FFFFFF</color>
+    <color name="primaryDarkColorLight">#F5F5F5</color>
+    <color name="primaryTextColorLight">#121212</color>
+    <color name="secondaryTextColorLight">#757575</color>
+    <color name="backgroundColorLight">#F5F5F5</color>
+    <color name="cardColorLight">#FFFFFF</color>
+
+    <!-- Dark Theme Colors -->
+    <color name="primaryColorDark">#121212</color>
+    <color name="primaryDarkColorDark">#1C1C1C</color>
+    <color name="primaryTextColorDark">#FFFFFF</color>
+    <color name="secondaryTextColorDark">#B0B0B0</color>
+    <color name="backgroundColorDark">#1C1C1C</color>
+    <color name="cardColorDark">#242424</color>
+
+    <!-- Common Colors -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="accentColor">#811D1D</color>
 
 
 

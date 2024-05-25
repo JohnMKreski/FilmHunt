@@ -2,8 +2,25 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.FilmHunt" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/primaryColorLight</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorLight</item>
+        <item name="colorAccent">@color/accentColor</item>
+        <!-- Customize your theme here -->
+        <item name="android:textColorPrimary">@color/primaryTextColorLight</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColorLight</item>
+        <item name="android:windowBackground">@color/backgroundColorLight</item>
+        <item name="android:colorBackground">@color/cardColorLight</item>
+
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
-    <style name="Theme.FilmHunt" parent="Base.Theme.FilmHunt" />
+    <style name="Theme.FilmHunt" parent="Base.Theme.FilmHunt">
+        <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="colorAccent">@color/accentColor</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
+    </style>
 </resources>

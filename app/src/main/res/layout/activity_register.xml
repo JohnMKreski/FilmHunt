@@ -8,70 +8,143 @@
     android:orientation="vertical"
     android:padding="15dp"
     android:gravity="center"
+    android:background="@color/black"
     tools:context=".Register">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/vector_size_small"
+        android:layout_height="@dimen/vector_size_small"
+        android:src="@drawable/twotone_local_movies_24"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:transitionName="logo_image"
+        app:tint="@color/white"
+        />
 
 
     <TextView
-        android:text="@string/register"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:id="@+id/logo_text"
+        android:text="One step closer to movie nirvana."
+        android:textSize="35sp"
+        android:fontFamily="@font/limelight"
+        android:textColor="@color/white"
         android:gravity="center"
-        android:layout_marginBottom="25dp"
+        android:transitionName="logo_text"
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
+        android:id="@+id/subheader"
+        android:text="Register and roll the film!"
+        android:textSize="20sp"
+        android:fontFamily="@font/limelight"
+        android:textColor="@color/grey"
+        android:gravity="left"
+        android:transitionName="subheader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:hint="@string/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
-            android:hint="@string/password"
+        <!--    EMAIL    -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_white"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:hint="Enter your email. No spam, just movies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirmPass"
-            android:hint="@string/confirmPass"
+        <!--    PASSWORD    -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_white"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            app:passwordToggleEnabled="true"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:hint="Password time!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    CONFIRM PASSWORD    -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_white"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPass"
+                android:hint="Password time! Again."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Join the Hunt!"
+            android:background="@drawable/transparent_button"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:elevation="0dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/loginNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Already part of the crew? Log in here."
+            android:background="@drawable/transparent_button"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:elevation="0dp"
+            android:layout_margin="5dp"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/loginNow"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:text="@string/loginNow"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+    </LinearLayout>
     <ProgressBar
         android:id="@+id/progressBar"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"/>
-
-    <TextView
-        android:id="@+id/loginNow"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:text="@string/loginNow"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
