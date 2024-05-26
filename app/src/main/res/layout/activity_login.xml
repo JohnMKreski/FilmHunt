@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:transitionName="subheader"
-        android:text="Your seat is waiting!"
+        android:text="Sign in to continue"
         android:fontFamily="@font/limelight"
         android:textSize="20sp"
         android:textColor="@color/grey"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:hint="Your email, please. We missed you!" />
+                android:hint="Email" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--    PASSWORD    -->
@@ -83,7 +83,7 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Your password. Shhh, it's a secret."
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
                 />
@@ -93,7 +93,7 @@
             android:id="@+id/forgotPassBtn"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="Can't remember? We got you!"
+            android:text="Forgot Password?"
             android:background="#00000000"
             android:textColor="@color/white"
             android:layout_gravity="right"
@@ -104,7 +104,7 @@
             android:id="@+id/loginBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter the Movie World!"
+            android:text="Sign In"
             android:background="@drawable/transparent_button"
             android:textColor="@color/white"
             android:layout_gravity="right"
@@ -115,7 +115,7 @@
             android:id="@+id/registerNow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ready for your close-up? Register here!"
+            android:text="New User? Register Here"
             android:background="@drawable/transparent_button"
             android:textColor="@color/white"
             android:layout_gravity="right"

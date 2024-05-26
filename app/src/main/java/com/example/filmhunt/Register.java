@@ -24,16 +24,25 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editEmail, editPassword, editConfirmPassword;
+    TextInputEditText
+            regName,
+            regUsername,
+            editEmail,
+            editPassword,
+            editConfirmPassword;
     Button regButton;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView, logo_text, subheader;
     ImageView logo;
 
+    FirebaseDatabase rootNode;
+    DatabaseReference usersReference;
 
 
     @Override
@@ -54,6 +63,8 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        //Hooks to all xml elements in activity_register.xml
         editEmail = findViewById(R.id.email);
         editPassword = findViewById(R.id.password);
         editConfirmPassword = findViewById(R.id.confirmPass);
@@ -65,6 +76,9 @@ public class Register extends AppCompatActivity {
         logo = findViewById(R.id.logo);
         logo_text = findViewById(R.id.logo_text);
         subheader = findViewById(R.id.subheader);
+
+        regName = findViewById(R.id.fullname);
+        regUsername = findViewById(R.id.username);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +100,24 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password, confirmPassword;
+                String name, username, email, password, confirmPassword;
+                name = String.valueOf((regName.getText()));
+                username = String.valueOf(regUsername.getText());
                 email = String.valueOf(editEmail.getText());
                 password = String.valueOf(editPassword.getText());
                 confirmPassword = String.valueOf(editConfirmPassword.getText());
+
+                if(TextUtils.isEmpty(name)) {
+                    Toast.makeText(Register.this, "Please enter your full name.", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+
+                if(TextUtils.isEmpty(username)) {
+                    Toast.makeText(Register.this, "Please enter a username.", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
 
                 if(TextUtils.isEmpty(email)) {
                     Toast.makeText(Register.this, "Please enter email.", Toast.LENGTH_SHORT).show();
@@ -98,7 +126,7 @@ public class Register extends AppCompatActivity {
                 }
 
                 if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(Register.this, "Please enter a valid email.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Email already exists.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
@@ -145,6 +173,20 @@ public class Register extends AppCompatActivity {
                                 }
                             }
                         });
+
+                //Firebase Database
+                rootNode = FirebaseDatabase.getInstance();
+                usersReference = rootNode.getReference("users");
+
+                //Pass values to helper class
+                UserHelperClass helperClass = new UserHelperClass(name, username, email, password);
+
+                //PUTs helperClass data into database
+                //reference = users
+                //reference.child = username
+                //DONT USE email as a sub directory child. Firebase wont accept '@' or any special characters
+                usersReference.child(name).setValue(helperClass);
+
             }
         });
 
