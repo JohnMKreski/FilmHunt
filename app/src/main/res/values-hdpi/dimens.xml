@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="vector_size_small">36dp</dimen>
+    <dimen name="vector_size_medium">72dp</dimen>
+    <dimen name="vector_size_large">108dp</dimen>
+</resources>

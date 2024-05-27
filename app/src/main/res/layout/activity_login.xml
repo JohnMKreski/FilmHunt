@@ -5,63 +5,144 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp"
     android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/black"
     tools:context=".Login">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/vector_size_small"
+        android:layout_height="@dimen/vector_size_small"
+        android:src="@drawable/twotone_local_movies_24"
+        android:layout_gravity="left"
+        android:layout_marginBottom="20dp"
+        android:transitionName="logo_image"
+        app:tint="@color/white"
+        />
 
-            <TextView
-                android:text="@string/login"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="25dp"
+    <TextView
+        android:id="@+id/logo_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Ready to find a movie?"
+        android:transitionName="logo_text"
+        android:textAlignment="viewStart"
+        android:fontFamily="@font/limelight"
+        android:textColor="@color/white"
+        android:textSize="42sp"
+        />
+
+    <TextView
+        android:id="@+id/subheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:transitionName="subheader"
+        android:text="Sign in to continue"
+        android:fontFamily="@font/limelight"
+        android:textSize="20sp"
+        android:textColor="@color/grey"
+
+        />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        >
+        <!--    EMAIL    -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_white"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
-                    android:hint="@string/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
-                    android:hint="@string/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:id="@+id/loginBtn"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/login"/>
+                android:textColor="@color/white"
+                android:hint="Email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/registerNow"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:text="@string/registerHere"
-                android:gravity="center"
+        <!--    PASSWORD    -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_white"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            app:passwordToggleEnabled="true">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/forgotPassBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:background="#00000000"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:background="@drawable/transparent_button"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:elevation="0dp"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:id="@+id/registerNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New User? Register Here"
+            android:background="@drawable/transparent_button"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            />
+
+<!--        <TextView-->
+<!--            android:id="@+id/registerNow"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:gravity="right"-->
+<!--            android:text="@string/registerHere"-->
+<!--            />-->
+
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+
+
+
 
 </LinearLayout>

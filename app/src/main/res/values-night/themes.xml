@@ -2,6 +2,16 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.FilmHunt" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/primaryColorDark</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorDark</item>
+        <item name="colorAccent">@color/accentColor</item>
+        <!-- Customize your theme here -->
+        <item name="android:textColorPrimary">@color/primaryTextColorDark</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColorDark</item>
+        <item name="android:windowBackground">@color/backgroundColorDark</item>
+        <item name="android:colorBackground">@color/cardColorDark</item>
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
 </resources>
