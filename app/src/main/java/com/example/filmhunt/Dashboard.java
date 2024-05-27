@@ -27,8 +27,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     Button fireBtn;
     FirebaseUser user;
     TextView textView;
+//    Toolbar toolbar;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
     Toolbar toolbar;
-    private DrawerLayout drawerLayout;
+
 
 
         @Override
@@ -37,7 +40,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             EdgeToEdge.enable(this);
             setContentView(R.layout.activity_dashboard);
 
-            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.dashboard), (v, insets) -> {
                 Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                 return insets;
@@ -69,12 +72,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             });
 
             //Toolbar
+            TitleHelperClass.setToolbarTitle(this, R.id.toolbar, R.id.dashboard);
+
             toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
             //Nav Drawer
             drawerLayout = findViewById(R.id.drawer_layout);
-            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView = findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
 
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -85,12 +90,23 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             toggle.syncState();
         }
 
+        //Page Settings
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_settings) {
                     Intent intent = new Intent(this, Settings.class);
+                    startActivity(intent);
+                }
+
+                if (id == R.id.nav_dashboard) {
+                    Intent intent = new Intent(this, Dashboard.class);
+                    startActivity(intent);
+                }
+
+                if (id == R.id.nav_userSettings) {
+                    Intent intent = new Intent(this, Dashboard.class);
                     startActivity(intent);
                 }
 

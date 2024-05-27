@@ -12,13 +12,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FilmHunt"
+        android:theme="@style/Base.Theme.FilmHunt"
         tools:targetApi="31">
         <activity
             android:name=".Settings"
             android:exported="false"
-            android:theme="@style/Theme.FilmHunt"
+            android:theme="@style/Base.Theme.FilmHunt"
             />
+        <activity
+            android:name=".Dashboard"
+            android:exported="false"
+            android:theme="@style/Base.Theme.FilmHunt"/>
         <activity
             android:name=".Register"
             android:exported="false"
@@ -29,9 +33,6 @@
             android:exported="false"
             android:theme="@style/Theme.FilmHunt"
             />
-        <activity
-            android:name=".Dashboard"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
