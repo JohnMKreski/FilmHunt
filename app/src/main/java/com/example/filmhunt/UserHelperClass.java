@@ -2,7 +2,7 @@ package com.example.filmhunt;
 
 public class UserHelperClass {
 
-    String name, username, email, password;
+    private String name, username, email, password;
 
     public UserHelperClass() {
     }

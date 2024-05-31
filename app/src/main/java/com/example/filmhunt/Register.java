@@ -185,7 +185,12 @@ public class Register extends AppCompatActivity {
                 //reference = users
                 //reference.child = username
                 //DONT USE email as a sub directory child. Firebase wont accept '@' or any special characters
-                usersReference.child(name).setValue(helperClass);
+
+                String mailID = helperClass.getEmail().replace("@", "")
+                        .replace(".", "");
+                Toast.makeText(Register.this, mailID, Toast.LENGTH_SHORT).show();
+
+                usersReference.child(mailID).setValue(helperClass);
 
             }
         });
