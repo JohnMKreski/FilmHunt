@@ -9,26 +9,41 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserAccount extends AppCompatActivity {
 
+    TextView nameText;
     TextView userText;
     TextView emailText;
     TextView uidText;
 
+    EditText newEmailText;
     EditText oldPasswordText;
     EditText newPasswordText;
     EditText newPassword2Text;
 
+    Button emailButton;
     Button passwordButton;
     Button deleteButton;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
+    DatabaseReference usersReference = rootNode.getReference("users");
+
+    UserHelperClass helperClass = new UserHelperClass();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +52,41 @@ public class UserAccount extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
 
-        //String username = user.getDisplayName();
-        String username = "user";
+
         String email = user.getEmail();
         String uid = user.getUid();
 
 
+        nameText = findViewById(R.id.name);
+
+
         userText = findViewById(R.id.username);
-        userText.setText(username);
+
+
+
+        String mailID = email.replace("@", "").replace(".", "");
+
+        usersReference.child(mailID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                helperClass = snapshot.getValue(UserHelperClass.class);
+
+                nameText.setText(helperClass.getName());
+                userText.setText(helperClass.getUsername());
+
+
+                //Toast.makeText(UserAccount.this, name, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(UserAccount.this, username, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(UserAccount.this, "Could not get User Data",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         emailText = findViewById(R.id.email);
         emailText.setText(email);
@@ -52,13 +94,34 @@ public class UserAccount extends AppCompatActivity {
         uidText = findViewById(R.id.uid);
         uidText.setText(uid);
 
-
+        newEmailText = findViewById(R.id.newEmailText);
         oldPasswordText = findViewById(R.id.oldPassword);
         newPasswordText = findViewById(R.id.newPassword);
         newPassword2Text = findViewById(R.id.newPassword2);
 
+        emailButton = findViewById(R.id.emailButton);
         passwordButton = findViewById(R.id.passwordButton);
         deleteButton = findViewById(R.id.deleteButton);
+
+        emailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String newEmail = String.valueOf(newEmailText.getText());
+
+                if (newEmail.isEmpty()) {
+                    Toast.makeText(UserAccount.this, "Please enter a new " +
+                            "e-mail", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    user.verifyBeforeUpdateEmail(newEmail);
+
+                    Toast.makeText(UserAccount.this, "A verification e-mail has been sent",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         passwordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,17 +131,17 @@ public class UserAccount extends AppCompatActivity {
                 String newPassword = String.valueOf(newPasswordText.getText());
                 String newPassword2 = String.valueOf(newPassword2Text.getText());
 
-                if (oldPassword.isEmpty()){
+                if (oldPassword.isEmpty()) {
                     Toast.makeText(UserAccount.this, "Please enter your current " +
                             "password", Toast.LENGTH_SHORT).show();
                 }
 
-                if (newPassword.isEmpty()){
+                if (newPassword.isEmpty()) {
                     Toast.makeText(UserAccount.this, "Please enter a new password",
                             Toast.LENGTH_SHORT).show();
                 }
 
-                if (newPassword2.isEmpty()){
+                if (newPassword2.isEmpty()) {
                     Toast.makeText(UserAccount.this, "Please confirm the new password",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -88,13 +151,14 @@ public class UserAccount extends AppCompatActivity {
                             "current password", Toast.LENGTH_SHORT).show();
                 }
 
-                if (!newPassword.equals(newPassword2)){
+                if (!newPassword.equals(newPassword2)) {
                     Toast.makeText(UserAccount.this, "New password does not match",
                             Toast.LENGTH_SHORT).show();
                 }
 
-                if (newPassword.equals(newPassword2)){
+                if (newPassword.equals(newPassword2)) {
                     user.updatePassword(newPassword);
+
                     user.reload();
 
                     Toast.makeText(UserAccount.this, "Password has been changed",
@@ -119,8 +183,8 @@ public class UserAccount extends AppCompatActivity {
 
                         user.delete();
 
-                        Toast.makeText(UserAccount.this, "You have deleted your account",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserAccount.this, "You have deleted your " +
+                                "account", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(getApplicationContext(), Login.class);
                         startActivity(intent);
@@ -138,7 +202,6 @@ public class UserAccount extends AppCompatActivity {
                 alertBuilder.show();
             }
         });
-
 
 
     }
