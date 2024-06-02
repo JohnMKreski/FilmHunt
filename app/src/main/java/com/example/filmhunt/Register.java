@@ -100,100 +100,67 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                String name, username, email, password, confirmPassword;
-                name = String.valueOf((regName.getText()));
-                username = String.valueOf(regUsername.getText());
-                email = String.valueOf(editEmail.getText());
-                password = String.valueOf(editPassword.getText());
-                confirmPassword = String.valueOf(editConfirmPassword.getText());
+                String name = String.valueOf((regName.getText()));
+                String username = String.valueOf(regUsername.getText());
+                String email = String.valueOf(editEmail.getText());
+                String password = String.valueOf(editPassword.getText());
+                String confirmPassword = String.valueOf(editConfirmPassword.getText());
 
-                if(TextUtils.isEmpty(name)) {
-                    Toast.makeText(Register.this, "Please enter your full name.", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(username) || TextUtils.isEmpty(email) ||
+                        TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword)) {
+                    Toast.makeText(Register.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if(TextUtils.isEmpty(username)) {
-                    Toast.makeText(Register.this, "Please enter a username.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-
-                if(TextUtils.isEmpty(email)) {
-                    Toast.makeText(Register.this, "Please enter email.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-
-                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(Register.this, "Email already exists.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-
-                if(TextUtils.isEmpty(password)){
-                    Toast.makeText(Register.this, "Please enter password.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-
-                if(TextUtils.isEmpty(confirmPassword)){
-                    Toast.makeText(Register.this, "Please confirm your password.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-
-                if(!password.equals(confirmPassword)){
+                if (!password.equals(confirmPassword)) {
                     Toast.makeText(Register.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
 
+                if (!UserHelperClass.validateEmail(email, Register.this) || !UserHelperClass.validatePassword(password, Register.this)) {
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                }
+
                 mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Toast.makeText(Register.this, "Registration successful.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), Dashboard.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                    String userId = firebaseUser.getUid();
+
+                                    rootNode = FirebaseDatabase.getInstance();
+                                    usersReference = rootNode.getReference("users");
+
+                                    UserHelperClass helperClass = new UserHelperClass(name, username, email, password);
+                                    usersReference.child(userId).setValue(helperClass)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(Register.this, "User registered successfully.", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(Register.this, Dashboard.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(Register.this, "Failed to register user.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                 } else {
-                                    // If sign in fails, display a message to the user.
                                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                        Toast.makeText(Register.this, "This email is already registered.",
-                                                Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Register.this, "This email is already registered.", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(Register.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Register.this, "Registration failed.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
                         });
-
-                //Firebase Database
-                rootNode = FirebaseDatabase.getInstance();
-                usersReference = rootNode.getReference("users");
-
-                //Pass values to helper class
-                UserHelperClass helperClass = new UserHelperClass(name, username, email, password);
-
-                //PUTs helperClass data into database
-                //reference = users
-                //reference.child = username
-                //DONT USE email as a sub directory child. Firebase wont accept '@' or any special characters
-
-                String mailID = helperClass.getEmail().replace("@", "")
-                        .replace(".", "");
-                Toast.makeText(Register.this, mailID, Toast.LENGTH_SHORT).show();
-
-                usersReference.child(mailID).setValue(helperClass);
-
             }
         });
-
     }
 }

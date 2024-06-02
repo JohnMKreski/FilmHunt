@@ -12,6 +12,7 @@ public class TitleHelperClass {
     static {
         titleMap.put(R.id.settings, "Settings");
         titleMap.put(R.id.dashboard, "Dashboard");
+        titleMap.put(R.id.useraccount, "Account");
         // Add more mappings as needed
     }
 
