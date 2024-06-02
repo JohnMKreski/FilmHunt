@@ -3,6 +3,7 @@ package com.example.filmhunt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,97 +12,86 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class UserAccount extends AppCompatActivity {
-
-    TextView nameText;
-    TextView userText;
-    TextView emailText;
-    TextView uidText;
-
-    EditText newEmailText;
-    EditText oldPasswordText;
-    EditText newPasswordText;
-    EditText newPassword2Text;
-
-    Button emailButton;
-    Button passwordButton;
-    Button deleteButton;
-
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-    FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-    DatabaseReference usersReference = rootNode.getReference("users");
-
+public class UserAccount extends BaseActivity {
+//    private static final String TAG = "UserAccount";
+    TextView nameText, userText, emailText, uidText;
+    EditText newEmailText, oldPasswordText, newPasswordText, newPassword2Text;
+    Button emailButton, passwordButton, deleteButton;
+    DatabaseReference usersReference;
     UserHelperClass helperClass = new UserHelperClass();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_useraccount);
+        setupNavigationDrawer(R.layout.activity_useraccount, R.id.toolbar, R.id.nav_view, R.id.dashboard, R.id.userDetails);
 
-        FirebaseUser user = mAuth.getCurrentUser();
-
+        // Firebase Auth is already initialized in BaseActivity
+        if (user == null) {
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         String email = user.getEmail();
+        String mailID = email.replace("@", "").replace(".", "");
+//        Log.d(TAG, "Formatted mailID: " + mailID);
+
+        //Firebase RealtimeDB
         String uid = user.getUid();
-
-
-        nameText = findViewById(R.id.name);
-
+        //retrieve data ref to specific user
+        usersReference = FirebaseDatabase.getInstance().getReference("users").child(uid);
+//        Log.d(TAG, "Database Reference Path: " + usersReference.toString());
 
         userText = findViewById(R.id.username);
-
-
-
-        String mailID = email.replace("@", "").replace(".", "");
-
-        usersReference.child(mailID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                helperClass = snapshot.getValue(UserHelperClass.class);
-
-                nameText.setText(helperClass.getName());
-                userText.setText(helperClass.getUsername());
-
-
-                //Toast.makeText(UserAccount.this, name, Toast.LENGTH_SHORT).show();
-                //Toast.makeText(UserAccount.this, username, Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(UserAccount.this, "Could not get User Data",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
+        nameText = findViewById(R.id.name);
         emailText = findViewById(R.id.email);
         emailText.setText(email);
-
         uidText = findViewById(R.id.uid);
         uidText.setText(uid);
-
         newEmailText = findViewById(R.id.newEmailText);
         oldPasswordText = findViewById(R.id.oldPassword);
         newPasswordText = findViewById(R.id.newPassword);
         newPassword2Text = findViewById(R.id.newPassword2);
-
         emailButton = findViewById(R.id.emailButton);
         passwordButton = findViewById(R.id.passwordButton);
         deleteButton = findViewById(R.id.deleteButton);
+
+        usersReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Log.d(TAG, "DataSnapshot: " + snapshot.toString());
+                helperClass = snapshot.getValue(UserHelperClass.class);
+                if(helperClass != null) {
+//                    Log.d(TAG, "Name: " + helperClass.getName());
+//                    Log.d(TAG, "Username: " + helperClass.getUsername());
+//                    Log.d(TAG, "UID: " + user.getUid());
+                    nameText.setText(helperClass.getName());
+                    userText.setText(helperClass.getUsername());
+                    emailText.setText(user.getEmail());
+                    uidText.setText(user.getUid());
+                }
+//                else{
+//                    Log.d(TAG, "helperClass is null");
+//                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e(TAG, "DatabaseError: " + error.getMessage());
+                Toast.makeText(UserAccount.this, "Could not get User Data",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +109,6 @@ public class UserAccount extends AppCompatActivity {
                     Toast.makeText(UserAccount.this, "A verification e-mail has been sent",
                             Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -131,41 +120,30 @@ public class UserAccount extends AppCompatActivity {
                 String newPassword = String.valueOf(newPasswordText.getText());
                 String newPassword2 = String.valueOf(newPassword2Text.getText());
 
-                if (oldPassword.isEmpty()) {
-                    Toast.makeText(UserAccount.this, "Please enter your current " +
-                            "password", Toast.LENGTH_SHORT).show();
+                if (oldPassword.isEmpty() || newPassword.isEmpty() || newPassword2.isEmpty()) {
+                    Toast.makeText(UserAccount.this, "Please enter all password fields.", Toast.LENGTH_SHORT).show();
+                } else if (!newPassword.equals(newPassword2)) {
+                    Toast.makeText(UserAccount.this, "New password does not match", Toast.LENGTH_SHORT).show();
+                } else if (oldPassword.equals(newPassword)) {
+                    Toast.makeText(UserAccount.this, "New password cannot match current password", Toast.LENGTH_SHORT).show();
+                } else if (!UserHelperClass.validatePassword(newPassword, UserAccount.this)) {
+                    //error message handled in UserHelperClass.java
+                } else {
+                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), oldPassword);
+                    user.reauthenticate(credential).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            user.updatePassword(newPassword).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Toast.makeText(UserAccount.this, "Password updated", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(UserAccount.this, "Password update failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(UserAccount.this, "Re-authentication failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-
-                if (newPassword.isEmpty()) {
-                    Toast.makeText(UserAccount.this, "Please enter a new password",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                if (newPassword2.isEmpty()) {
-                    Toast.makeText(UserAccount.this, "Please confirm the new password",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                if (oldPassword.equals(newPassword)) {
-                    Toast.makeText(UserAccount.this, "New password cannot match " +
-                            "current password", Toast.LENGTH_SHORT).show();
-                }
-
-                if (!newPassword.equals(newPassword2)) {
-                    Toast.makeText(UserAccount.this, "New password does not match",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                if (newPassword.equals(newPassword2)) {
-                    user.updatePassword(newPassword);
-
-                    user.reload();
-
-                    Toast.makeText(UserAccount.this, "Password has been changed",
-                            Toast.LENGTH_SHORT).show();
-
-                }
-
             }
         });
 
@@ -202,8 +180,5 @@ public class UserAccount extends AppCompatActivity {
                 alertBuilder.show();
             }
         });
-
-
     }
-
 }
