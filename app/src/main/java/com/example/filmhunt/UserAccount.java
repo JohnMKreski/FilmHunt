@@ -140,7 +140,7 @@ public class UserAccount extends BaseActivity {
                                 }
                             });
                         } else {
-                            Toast.makeText(UserAccount.this, "Re-authentication failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserAccount.this, "Current password is incorrect.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

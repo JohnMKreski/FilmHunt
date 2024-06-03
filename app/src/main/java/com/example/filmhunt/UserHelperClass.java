@@ -62,8 +62,8 @@ public class UserHelperClass {
 
     // Password validation. Removed getters/setters for password. Handled by firebase
     public static boolean validatePassword(String password, Context context) {
-        if (password.length() < 12) {
-            Toast.makeText(context, "Password is too short. It must be at least 12 characters long.", Toast.LENGTH_SHORT).show();
+        if (password.length() < 6) {
+            Toast.makeText(context, "Password must be at least 6 characters.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -86,16 +86,16 @@ public class UserHelperClass {
         }
 
         if (!hasUppercase) {
-            Toast.makeText(context, "Password is missing an uppercase letter.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Password must include an uppercase letter.", Toast.LENGTH_SHORT).show();
         }
         if (!hasLowercase) {
-            Toast.makeText(context, "Password is missing a lowercase letter.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Password must include a lowercase letter.", Toast.LENGTH_SHORT).show();
         }
         if (!hasDigit) {
-            Toast.makeText(context, "Password is missing a digit.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Password must include a digit.", Toast.LENGTH_SHORT).show();
         }
         if (!hasSymbol) {
-            Toast.makeText(context, "Password is missing a symbol.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Password must include a symbol.", Toast.LENGTH_SHORT).show();
         }
 
         return hasUppercase && hasLowercase && hasDigit && hasSymbol;
