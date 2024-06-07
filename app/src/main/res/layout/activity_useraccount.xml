@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Drawer Layout -->
+<?xml version="1.0" encoding="utf-8"?><!-- Drawer Layout -->
 <!--  MUST INCLUDE IN EVERY PAGE LAYOUT  -->
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,309 +8,587 @@
     android:layout_height="match_parent"
     tools:context=".UserAccount">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/useraccount"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/useraccount"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!-- Dynamic Toolbar-->
-    <!--  MUST INCLUDE IN EVERY PAGE LAYOUT  -->
-    <include
-        layout="@layout/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/username_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="124dp"
-        android:text="Username: "
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountBackground"
-        tools:text="Username: " />
-
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintStart_toEndOf="@+id/username_label"
-        app:layout_constraintTop_toBottomOf="@+id/accountBackground"
-        tools:text="user" />
-
-    <LinearLayout
-        android:id="@+id/accountBackground"
-        android:layout_width="411dp"
-        android:layout_height="79dp"
-        android:background="#8C2727"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/accountTitle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/userLinearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ACCOUNT"
-            android:textColor="#FFFFFF"
-            android:textSize="48sp"
-            android:layout_marginStart="25dp"
-             />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Dynamic Toolbar-->
+            <!--  MUST INCLUDE IN EVERY PAGE LAYOUT  -->
+            <include
+                layout="@layout/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userLinearLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/accountBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="#8C2727"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        >
+
+                        <ImageView
+                            android:id="@+id/profile_image"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_usersettings_foreground" />
+
+                        <!--        <TextView-->
+                        <!--            android:id="@+id/nameLabel"-->
+                        <!--            android:layout_width="wrap_content"-->
+                        <!--            android:layout_height="wrap_content"-->
+                        <!--            android:layout_marginStart="28dp"-->
+                        <!--            android:text="Name: "-->
+                        <!--            android:textSize="20sp"-->
+                        <!--            app:layout_constraintBottom_toTopOf="@+id/username_label"-->
+                        <!--            app:layout_constraintStart_toStartOf="parent"-->
+                        <!--            app:layout_constraintTop_toBottomOf="@+id/accountBackground"-->
+                        <!--            app:layout_constraintVertical_bias="0.793" />-->
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/profile_image"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                tools:text="Full Name" />
+
+                            <TextView
+                                android:id="@+id/username"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
+                                tools:text="Username" />
+
+                            <TextView
+                                android:id="@+id/email"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/username"
+                                tools:text="email@email.com" />
+
+                            <TextView
+                                android:id="@+id/uid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
+                                tools:text="UID" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <!--        <TextView-->
+                    <!--            android:id="@+id/accountTitle"-->
+                    <!--            android:layout_width="wrap_content"-->
+                    <!--            android:layout_height="wrap_content"-->
+                    <!--            android:text="ACCOUNT"-->
+                    <!--            android:textSize="48sp"-->
+                    <!--            android:layout_marginStart="25dp"-->
+                    <!--            />-->
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:id="@+id/user_infoTabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/accountBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="125dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#8C2727"
+                            app:cardElevation="10dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp">
+
+                                <ImageView
+
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/ic_film_hunt_foreground"
+                                    app:tint="@color/white" />
+
+                                <TextView
+                                    android:id="@+id/watchlist_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:fontFamily="@font/limelight"
+                                    android:includeFontPadding="false"
+                                    android:text="Watchlist"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp" />
+
+                                <TextView
+                                    android:id="@+id/watchlist_desc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/watchlist_label"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:includeFontPadding="false"
+                                    android:text="12"
+                                    android:textColor="@color/white"
+                                    android:textSize="15dp"
+
+                                    />
+
+                            </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/emailLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="68dp"
-        android:text="E-mail: "
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/emailButton"
-        app:layout_constraintEnd_toStartOf="@+id/email"
-        app:layout_constraintHorizontal_bias="0.076"
-        app:layout_constraintStart_toStartOf="parent" />
+                        </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="104dp"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        tools:text="email@email.com" />
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="125dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#8C2727"
+                            app:cardElevation="10dp">
 
-<!--    userDetails was needed to ensure user data flows to pages-->
-    <TextView
-        android:id="@+id/userDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User Email"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp">
 
-    <Button
-        android:id="@+id/passwordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#8C2727"
-        android:text="Change Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPassword2Label" />
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:src="@drawable/ic_film_hunt_foreground"
+                                    app:tint="@color/white" />
 
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="#8C2727"
-        android:text="Delete Account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.098"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordButton"
-        app:layout_constraintVertical_bias="1.0" />
+                                <TextView
+                                    android:id="@+id/movies_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:fontFamily="@font/limelight"
+                                    android:includeFontPadding="false"
+                                    android:text="Found Films"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/currentPasswordLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="152dp"
-        android:text="Current Password: "
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
+                                <TextView
+                                    android:id="@+id/foundFilms_desc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/movies_label"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:includeFontPadding="false"
+                                    android:text="25"
+                                    android:textColor="@color/white"
+                                    android:textSize="15dp" />
 
-    <TextView
-        android:id="@+id/newPasswordLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:text="New Password: "
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentPasswordLabel" />
+                            </RelativeLayout>
 
-    <TextView
-        android:id="@+id/newPassword2Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
-        android:text="Confirm Password: "
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPasswordLabel" />
 
-    <EditText
-        android:id="@+id/oldPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/currentPasswordLabel"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+                        </com.google.android.material.card.MaterialCardView>
 
-    <EditText
-        android:id="@+id/newPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/newPasswordLabel"
-        app:layout_constraintTop_toBottomOf="@+id/oldPassword" />
 
-    <EditText
-        android:id="@+id/newPassword2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/newPassword2Label"
-        app:layout_constraintTop_toBottomOf="@+id/newPassword"
-        app:layout_constraintVertical_bias="0.0" />
+                    </LinearLayout>
 
-    <TextView
-        android:id="@+id/uidLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UID: "
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordButton"
-        app:layout_constraintVertical_bias="0.611" />
 
-    <TextView
-        android:id="@+id/uid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/deleteButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
-        app:layout_constraintStart_toEndOf="@+id/uidLabel"
-        app:layout_constraintTop_toBottomOf="@+id/passwordButton"
-        app:layout_constraintVertical_bias="0.611"
-        tools:text="uid" />
+                </RelativeLayout>
 
-    <TextView
-        android:id="@+id/nameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:text="Name: "
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/username_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountBackground"
-        app:layout_constraintVertical_bias="0.793" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_infoTabs">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toEndOf="@+id/nameLabel"
-        app:layout_constraintTop_toBottomOf="@+id/accountBackground"
-        app:layout_constraintVertical_bias="0.793"
-        tools:text="name" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
 
-    <Button
-        android:id="@+id/emailButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:backgroundTint="#AC2727"
-        android:text="Change E-mail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/newEmailLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="New E-mail: "
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/emailButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailLabel"
-        app:layout_constraintVertical_bias="0.642" />
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:hint="Full Name"
+                                android:background="@color/transparent_white"
+                                style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                                app:boxStrokeColor="@color/design_default_color_primary"
+                                app:hintTextColor="@color/design_default_color_primary"
+                                >
 
-    <EditText
-        android:id="@+id/newEmailText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/oldPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/newEmailLabel"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.247" />
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/newNameText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Button
+                                android:id="@+id/update_nameBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:backgroundTint="@color/pre_updateBtnColor"
+                                android:fontFamily="@font/limelight"
+                                android:text="Update" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:hint="Username"
+                                app:boxStrokeColor="@color/design_default_color_primary"
+                                app:hintTextColor="@color/design_default_color_primary"
+                                >
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/newUsernameText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Button
+                                android:id="@+id/update_usernameBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:backgroundTint="@color/pre_updateBtnColor"
+                                android:fontFamily="@font/limelight"
+                                android:text="Update" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:hint="Email"
+                                app:boxStrokeColor="@color/design_default_color_primary"
+                                app:hintTextColor="@color/design_default_color_primary"
+                                >
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/newEmailText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Button
+                                android:id="@+id/emailButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:backgroundTint="@color/pre_updateBtnColor"
+                                android:fontFamily="@font/limelight"
+                                android:text="Update" />
+
+                        </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1"
+                            android:hint="Password"
+                            app:boxStrokeColor="@color/design_default_color_primary"
+                            app:hintTextColor="@color/design_default_color_primary"
+                            >
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/passwordButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/pre_updateBtnColor"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/limelight"
+                            android:text="Update" />
+
+                    </LinearLayout>
+
+<!--                        <Button-->
+<!--                            android:id="@+id/user_updateUserBtn"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:backgroundTint="#8C2727"-->
+<!--                            android:fontFamily="@font/limelight"-->
+<!--                            android:text="Update" />-->
+
+                        <Button
+                            android:id="@+id/deleteButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/pre_updateBtnColor"
+                            android:fontFamily="@font/limelight"
+                            android:text="Delete Account" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <!--    <LinearLayout-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:orientation="vertical"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toBottomOf="@+id/accountBackground">-->
+        <!--        >-->
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/username_label"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Username: "-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/accountBackground"-->
+        <!--            tools:text="Username: " />-->
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/emailLabel"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="E-mail: "-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/emailButton"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/email"-->
+        <!--            app:layout_constraintHorizontal_bias="0.076"-->
+        <!--            app:layout_constraintStart_toStartOf="parent" />-->
+
+
+        <!--        &lt;!&ndash;    userDetails was needed to ensure user data flows to pages&ndash;&gt;-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/userDetails"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="User Email"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/username" />-->
+
+
+
+        <!--        <Button-->
+        <!--            android:id="@+id/deleteButton"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:backgroundTint="#8C2727"-->
+        <!--            android:text="Delete Account"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.098"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/passwordButton"-->
+        <!--            app:layout_constraintVertical_bias="1.0" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/currentPasswordLabel"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="28dp"-->
+        <!--            android:text="Current Password: "-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/emailLabel" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/newPasswordLabel"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="New Password: "-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/currentPasswordLabel" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/newPassword2Label"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Confirm Password: "-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/newPasswordLabel" />-->
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/oldPassword"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:ems="10"-->
+        <!--            android:inputType="textPassword"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="1.0"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/currentPasswordLabel"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/email" />-->
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/newPassword"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:ems="10"-->
+        <!--            android:inputType="textPassword"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="1.0"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/newPasswordLabel"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/oldPassword" />-->
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/newPassword2"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:ems="10"-->
+        <!--            android:inputType="textPassword"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="1.0"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/newPassword2Label"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/newPassword"-->
+        <!--            app:layout_constraintVertical_bias="0.0" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/uidLabel"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="UID: "-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/deleteButton"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.068"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/passwordButton"-->
+        <!--            app:layout_constraintVertical_bias="0.611" />-->
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/newEmailLabel"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="New E-mail: "-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/emailButton"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/emailLabel"-->
+        <!--            app:layout_constraintVertical_bias="0.642" />-->
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/newEmailText"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:ems="10"-->
+        <!--            android:inputType="textEmailAddress"-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/oldPassword"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.0"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/newEmailLabel"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/email"-->
+        <!--            app:layout_constraintVertical_bias="0.247" />-->
+
+        <!--    </LinearLayout>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Navigation view -->
     <!--  MUST INCLUDE IN EVERY PAGE LAYOUT  -->

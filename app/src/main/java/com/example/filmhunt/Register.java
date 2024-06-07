@@ -4,8 +4,8 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
-import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
+
+    private static final String TAG = "Register";
 
     TextInputEditText
             regName,
@@ -131,17 +133,19 @@ public class Register extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                                    String userId = firebaseUser.getUid();
+                                    String uid = firebaseUser.getUid();
 
                                     rootNode = FirebaseDatabase.getInstance();
                                     usersReference = rootNode.getReference("users");
 
-                                    UserHelperClass helperClass = new UserHelperClass(name, username, email, password);
-                                    usersReference.child(userId).setValue(helperClass)
+                                    UserHelperClass helperClass = new UserHelperClass(name, username, email, uid, password);
+                                    usersReference.child(uid).setValue(helperClass)
+
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
+                                                        Log.d(TAG, "User Reference: " + usersReference.toString());
                                                         Toast.makeText(Register.this, "User registered successfully.", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(Register.this, Dashboard.class);
                                                         startActivity(intent);

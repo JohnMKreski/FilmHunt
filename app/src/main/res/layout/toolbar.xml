@@ -15,6 +15,7 @@
         android:layout_gravity="center"
         android:textColor="@android:color/white"
         android:textSize="20sp"
+        android:text="Title"
         android:fontFamily="@font/limelight"/>
 </androidx.appcompat.widget.Toolbar>
 

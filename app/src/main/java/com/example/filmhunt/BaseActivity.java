@@ -3,7 +3,6 @@ package com.example.filmhunt;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +13,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -60,12 +61,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        textView = findViewById(userDetailsId);
-        if (user != null) {
-            textView.setText(user.getEmail());
-            //this handles the visibility of the email
-            textView.setVisibility(View.GONE);
-        }
+//        textView = findViewById(userDetailsId);
+//        if (user != null) {
+//            textView.setText(user.getEmail());
+//            //this handles the visibility of the email
+//            textView.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -98,5 +99,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    protected void reauthenticate(String currentEmail, String password, Runnable onReauthSuccess, Runnable onReauthFailure) {
+        AuthCredential credential = EmailAuthProvider.getCredential(currentEmail, password);
+        user.reauthenticate(credential).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                onReauthSuccess.run();
+            } else {
+                onReauthFailure.run();
+            }
+        });
     }
 }
