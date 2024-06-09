@@ -23,11 +23,10 @@
         />
 
     <TextView
-        android:id="@+id/userDetails"
+        android:id="@+id/nav_userDetails"
         android:layout_width="wrap_content"
+        android:text=""
         android:layout_height="wrap_content"
-        android:text="Sign in to view account information."
         android:textColor="@color/white"
-        android:textStyle="italic"
-        />
+        android:textStyle="italic" />
 </LinearLayout>

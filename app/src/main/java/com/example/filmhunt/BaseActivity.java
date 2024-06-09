@@ -40,7 +40,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        checkAuthentication();
+        //checkAuthentication();
     }
 
     protected void setupNavigationDrawer(int layoutId, int toolbarId, int navViewId, int activityId, int userDetailsId) {
@@ -54,6 +54,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(navViewId);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //setContentView(R.layout.nav_header);
+
+        //This comes up null
+        textView = findViewById(R.id.nav_userDetails);
+        if (user == null) {
+            textView.setText("Sign in to view account information.");
+        } else {
+            textView.setText(user.getUid());
+        }
+
+        //setContentView(layoutId);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open,
@@ -61,30 +73,31 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-//        textView = findViewById(userDetailsId);
-//        if (user != null) {
-//            textView.setText(user.getEmail());
-//            //this handles the visibility of the email
-//            textView.setVisibility(View.GONE);
-//        }
+
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         int id = item.getItemId();
 
         if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, Settings.class);
             startActivity(intent);
-        }
-
-        if (id == R.id.nav_dashboard) {
+        } else if (id == R.id.nav_dashboard) {
             Intent intent = new Intent(this, Dashboard.class);
             startActivity(intent);
         }
 
         if (id == R.id.nav_userSettings) {
             Intent intent = new Intent(this, UserAccount.class);
+            startActivity(intent);
+        }
+
+        if (id == R.id.nav_logout) {
+
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
         }
 

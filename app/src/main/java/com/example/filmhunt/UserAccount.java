@@ -37,7 +37,7 @@ public class UserAccount extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        setupNavigationDrawer(R.layout.activity_useraccount, R.id.toolbar, R.id.nav_view, R.id.useraccount, R.id.userDetails);
+        setupNavigationDrawer(R.layout.activity_useraccount, R.id.toolbar, R.id.nav_view, R.id.useraccount, R.id.nav_userDetails);
 
 
         // Firebase Auth is already initialized in BaseActivity

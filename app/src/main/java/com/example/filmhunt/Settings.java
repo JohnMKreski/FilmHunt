@@ -33,7 +33,7 @@ public class Settings extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        setupNavigationDrawer(R.layout.activity_settings, R.id.toolbar, R.id.nav_view, R.id.settings, R.id.userDetails);
+        setupNavigationDrawer(R.layout.activity_settings, R.id.toolbar, R.id.nav_view, R.id.settings, R.id.nav_userDetails);
 
 
         //Toolbar
