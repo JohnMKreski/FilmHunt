@@ -37,7 +37,6 @@ public class Dashboard extends BaseActivity {
             apiDetails = findViewById(R.id.apiDetails);
             searchBar = findViewById(R.id.searchView);
 
-        // Setup Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://imdb8.p.rapidapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -54,7 +53,7 @@ public class Dashboard extends BaseActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Optionally handle text change if needed
+                //handles text
                 return false;
             }
         });

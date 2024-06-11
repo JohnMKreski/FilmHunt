@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class ImdbResponse {
+    // This class can be edited to include more properties from the api
     @SerializedName("d")
     public List<Movie> movies;
 
