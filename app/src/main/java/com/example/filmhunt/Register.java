@@ -98,6 +98,7 @@ public class Register extends AppCompatActivity {
             }
         });
 
+
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,14 +141,17 @@ public class Register extends AppCompatActivity {
 
                                     UserHelperClass helperClass = new UserHelperClass(name, username, email, uid, password);
                                     usersReference.child(uid).setValue(helperClass)
-
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
+
+                                                        // Send email verification
+                                                        sendEmailVerification(firebaseUser);
                                                         Log.d(TAG, "User Reference: " + usersReference.toString());
-                                                        Toast.makeText(Register.this, "User registered successfully.", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(Register.this, Dashboard.class);
+
+                                                        Toast.makeText(Register.this, "User registered successfully. Please check your email for verification.", Toast.LENGTH_LONG).show();
+                                                        Intent intent = new Intent(Register.this, VerifyEmailActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     } else {
@@ -165,6 +169,20 @@ public class Register extends AppCompatActivity {
                             }
                         });
             }
+
+            private void sendEmailVerification(FirebaseUser user) {
+                if (user != null) {
+                    user.sendEmailVerification().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Register.this, "Verification email sent", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Register.this, "Failed to send verification email", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+
+
         });
     }
 }
