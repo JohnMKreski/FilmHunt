@@ -8,16 +8,17 @@ import java.util.regex.Matcher;
 
 public class UserHelperClass {
 
-    private String name, username, email, uid;
+    private String name, username, email, uid, password;
 
     public UserHelperClass() {
     }
 
-    public UserHelperClass(String name, String username, String email, String uid) {
+    public UserHelperClass(String name, String username, String email, String uid, String password) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.uid = uid;
+        this.password = password;
     }
 
     public String getName() {
@@ -47,6 +48,8 @@ public class UserHelperClass {
     public String getUid() {
         return uid;
     }
+
+    public String getPassword () { return password; }
 
     // Email validation
     public static boolean validateEmail(String email, Context context) {

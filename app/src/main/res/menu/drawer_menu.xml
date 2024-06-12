@@ -6,10 +6,15 @@
         android:icon="@drawable/ic_dashboard_foreground" />
     <item
         android:id="@+id/nav_userSettings"
-        android:title="User Settings"
+        android:title="User Account"
         android:icon="@drawable/ic_usersettings_foreground" />
     <item
         android:id="@+id/nav_settings"
         android:title="@string/settings"
         android:icon="@drawable/ic_settings_foreground" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Logout"
+        android:icon="@drawable/ic_logout" />
 </menu>
