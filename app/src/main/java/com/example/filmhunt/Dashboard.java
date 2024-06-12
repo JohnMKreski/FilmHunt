@@ -1,13 +1,12 @@
 package com.example.filmhunt;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SearchView;
+
 import com.example.filmhunt.Models.ImdbResponse;
-import com.google.firebase.auth.FirebaseAuth;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,16 +22,16 @@ public class Dashboard extends BaseActivity {
     @Override
         protected void onCreate (Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setupNavigationDrawer(R.layout.activity_dashboard, R.id.toolbar, R.id.nav_view, R.id.dashboard, R.id.userDetails);
+            setupNavigationDrawer(R.layout.activity_dashboard, R.id.toolbar, R.id.nav_view, R.id.dashboard, R.id.nav_head_userDetails);
 
-            //firebase logout
-            fireBtn = findViewById(R.id.logout);
-            fireBtn.setOnClickListener(v -> {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            });
+//            //firebase logout
+//            fireBtn = findViewById(R.id.logout);
+//            fireBtn.setOnClickListener(v -> {
+//                FirebaseAuth.getInstance().signOut();
+//                Intent intent = new Intent(getApplicationContext(), Login.class);
+//                startActivity(intent);
+//                finish();
+//            });
 
             apiDetails = findViewById(R.id.apiDetails);
             searchBar = findViewById(R.id.searchView);

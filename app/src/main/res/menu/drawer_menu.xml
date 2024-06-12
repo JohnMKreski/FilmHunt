@@ -5,6 +5,10 @@
         android:title="Dashboard"
         android:icon="@drawable/ic_dashboard_foreground" />
     <item
+        android:id="@+id/nav_watchlist"
+        android:title="Watchlist"
+        android:icon="@drawable/ic_favorite" />
+    <item
         android:id="@+id/nav_userSettings"
         android:title="User Account"
         android:icon="@drawable/ic_usersettings_foreground" />
