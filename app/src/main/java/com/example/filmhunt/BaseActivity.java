@@ -30,13 +30,13 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    FirebaseAuth auth;
-    FirebaseUser user;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
-    TextView textView, nav_head_userDetails;
-    UserHelperClass helperClass = new UserHelperClass();
+    protected FirebaseAuth auth;
+    protected FirebaseUser user;
+    protected DrawerLayout drawerLayout;
+    protected NavigationView navigationView;
+    protected Toolbar toolbar;
+    protected TextView textView, nav_head_userDetails;
+    protected UserHelperClass helperClass = new UserHelperClass();
     protected Handler handler;
 
     protected Runnable checkVerificationRunnable;
