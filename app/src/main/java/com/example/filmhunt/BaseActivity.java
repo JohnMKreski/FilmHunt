@@ -140,6 +140,17 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
 
+        if (id == R.id.nav_watchlist) {
+            Intent intent = new Intent(this, Watchlist.class);
+            startActivity(intent);
+        }
+        if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
+        }
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
