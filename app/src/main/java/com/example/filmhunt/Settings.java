@@ -1,112 +1,85 @@
 package com.example.filmhunt;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.google.android.material.navigation.NavigationView;
+import androidx.preference.PreferenceFragmentCompat;
 
 public class Settings extends BaseActivity {
 
-    private static final String PREFS_NAME = "theme_prefs";
-    private static final String KEY_THEME = "is_night_mode";
+    Button watch;
+    Button hist;
+    Button cache;
+    Button contact;
 
     SwitchCompat themeSwitch;
 
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settings), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new SettingsFragment())
+                    .commit();
+        }
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         setupNavigationDrawer(R.layout.activity_settings, R.id.toolbar, R.id.nav_view, R.id.settings, R.id.nav_head_userDetails);
 
+        themeSwitch = findViewById(R.id.themeSwitch);
 
-        //Toolbar
-//        TitleHelperClass.setToolbarTitle(this, R.id.toolbar, R.id.settings);
-//
-//        toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-        //Nav Drawer
-//        drawerLayout = findViewById(R.id.drawer_layout);
-//        navigationView = findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-//
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawerLayout, toolbar,
-//                R.string.navigation_drawer_open,
-//                R.string.navigation_drawer_close);
-//        drawerLayout.addDrawerListener(toggle);
-//        toggle.syncState();
+            }
+        });
 
-        //Theme Setting
-//        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-//        boolean isNightMode = preferences.getBoolean(KEY_THEME, false);
-//
-//        themeSwitch = findViewById(R.id.themeSwitch);
-//        themeSwitch.setChecked(isNightMode);
-//
-//        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                }
-//
-//                // Save the preference
-//                SharedPreferences.Editor editor = preferences.edit();
-//                editor.putBoolean(KEY_THEME, isChecked);
-//                editor.apply();
-//            }
-//        });
+        watch = findViewById(R.id.clearWatchButton);
+        hist = findViewById(R.id.clearHistButton);
+        cache = findViewById(R.id.clearCacheButton);
+        contact = findViewById(R.id.contactButton);
+
+        watch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        hist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        cache.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
     }
 
-    //Nav
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_settings) {
-//            Intent intent = new Intent(this, Settings.class);
-//            startActivity(intent);
-//        }
-//
-//        if (id == R.id.nav_dashboard) {
-//            Intent intent = new Intent(this, Dashboard.class);
-//            startActivity(intent);
-//        }
-//
-//        if (id == R.id.nav_userSettings) {
-//            Intent intent = new Intent(this, Dashboard.class);
-//            startActivity(intent);
-//        }
-//
-//        drawerLayout.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-
-//    @Override
-//    public void onBackPressed() {
-//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
+    public static class SettingsFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        }
+    }
 }
