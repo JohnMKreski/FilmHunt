@@ -290,11 +290,22 @@ public class UserAccount extends BaseActivity {
                     user.reauthenticate(credential).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             user.updatePassword(newPassword).addOnCompleteListener(task1 -> {
-                                passwordDialog.dismiss();
                                 if (task1.isSuccessful()) {
+                                    //updates in Firebase Realtime db here like username, email, and name above
+                                    usersReference.child("password").setValue(newPassword)
+                                            .addOnSuccessListener(aVoid -> {
+                                                //these toast logs are only for testing and will not appear in app
+                                                Toast.makeText(UserAccount.this, "Password updated in database", Toast.LENGTH_SHORT).show();
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Toast.makeText(UserAccount.this, "Failed to update password in database", Toast.LENGTH_SHORT).show();
+                                            });
+
+                                    passwordDialog.dismiss();
                                     Toast.makeText(UserAccount.this, "Password updated", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 } else {
+                                    passwordDialog.dismiss();
                                     Toast.makeText(UserAccount.this, "Password update failed", Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -339,6 +350,7 @@ public class UserAccount extends BaseActivity {
         }).show();
     }
 
+    //changed reauthenticate to protected, an access lower than the BaseActivty to become accessible in package
     protected void reauthenticate(String email, String password, Runnable onSuccess, Runnable onFailure) {
         AuthCredential credential = EmailAuthProvider.getCredential(email, password);
         user.reauthenticate(credential).addOnCompleteListener(task -> {
