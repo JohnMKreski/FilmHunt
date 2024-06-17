@@ -13,6 +13,7 @@ public class TitleHelperClass {
         titleMap.put(R.id.settings, "Settings");
         titleMap.put(R.id.dashboard, "Dashboard");
         titleMap.put(R.id.useraccount, "User Account");
+        titleMap.put(R.id.watchlist, "Watchlist");
         // Add more mappings as needed
     }
 
