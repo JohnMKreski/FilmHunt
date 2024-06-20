@@ -38,6 +38,8 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="search_for_your_desired_movies">Search For Your Desired Movies</string>
+    <string name="movie_image_desc">movie_image_desc</string>
 
 
 </resources>

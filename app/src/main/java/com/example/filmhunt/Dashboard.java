@@ -1,11 +1,15 @@
 package com.example.filmhunt;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.example.filmhunt.Models.ImdbResponse;
 
 import retrofit2.Call;
@@ -20,9 +24,9 @@ public class Dashboard extends BaseActivity {
     SearchView searchBar;
 
     @Override
-        protected void onCreate (Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setupNavigationDrawer(R.layout.activity_dashboard, R.id.toolbar, R.id.nav_view, R.id.dashboard, R.id.nav_head_userDetails);
+    protected void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setupNavigationDrawer(R.layout.activity_dashboard, R.id.toolbar, R.id.nav_view, R.id.dashboard, R.id.nav_head_userDetails);
 
 //            //firebase logout
 //            fireBtn = findViewById(R.id.logout);
@@ -33,8 +37,8 @@ public class Dashboard extends BaseActivity {
 //                finish();
 //            });
 
-            apiDetails = findViewById(R.id.apiDetails);
-            searchBar = findViewById(R.id.searchView);
+        apiDetails = findViewById(R.id.apiDetails);
+        searchBar = findViewById(R.id.searchView);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://imdb8.p.rapidapi.com/")
@@ -61,17 +65,31 @@ public class Dashboard extends BaseActivity {
     private void searchMovies(RequestManager apiService, String query) {
         Call<ImdbResponse> call = apiService.getMovies(query);
         call.enqueue(new Callback<ImdbResponse>() {
+
+            private void setMovieDetails(String details, String imageUrl) {
+                apiDetails.setText(details);
+
+                ImageView movieImage = findViewById(R.id.movieImage);
+                ViewTarget<ImageView, Drawable> into = Glide.with(Dashboard.this)
+                        .load(imageUrl)
+                        .into(movieImage);
+            }
             @Override
             public void onResponse(Call<ImdbResponse> call, Response<ImdbResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     StringBuilder result = new StringBuilder();
+
                     for (ImdbResponse.Movie movie : response.body().movies) {
                         result.append("Title: ").append(movie.title).append("\n")
                                 .append("Year: ").append(movie.year).append("\n")
-                                .append("Stars: ").append(movie.stars).append("\n")
-                                .append("Image URL: ").append(movie.image.imageUrl).append("\n\n");
+                                .append("Stars: ").append(movie.stars).append("\n\n");
+
+
+                        setMovieDetails(result.toString(), movie.image.imageUrl);
                     }
+
                     apiDetails.setText(result.toString());
+
                 } else {
                     apiDetails.setText("Error: " + response.message());
                 }
