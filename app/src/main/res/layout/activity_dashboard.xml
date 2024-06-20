@@ -34,18 +34,42 @@
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:queryHint="Search for movies"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="420dp"
+            android:layout_height="810dp"
+            app:cardBackgroundColor="#8C2727"
+            app:cardElevation="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/dashTopLinearLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dashTopLinearLayout" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/watchlist_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/limelight"
+                android:includeFontPadding="false"
+                android:text="@string/search_for_your_desired_movies"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:background="@color/outlineColor"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:queryHint="Search for movies" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="130dp"
                 app:layout_constraintTop_toBottomOf="@+id/searchView">
 
                 <LinearLayout
@@ -54,48 +78,32 @@
                     android:orientation="vertical"
                     android:layout_gravity="center_horizontal"
                     android:weightSum="1">
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/userDetails"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_horizontal"-->
-<!--                        android:text="Search for a movie!"-->
-<!--                        android:textSize="24sp"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintHorizontal_bias="0.498"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        app:layout_constraintVertical_bias="0.366" />-->
+                    <ImageView
+                        android:id="@+id/movieImage"
+                        android:layout_width="420dp"
+                        android:layout_height="300dp"
+                        android:layout_marginTop="1dp"
+                        android:contentDescription="@string/movie_image_desc" />
 
                     <TextView
                         android:id="@+id/apiDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="api"
-                        android:textSize="24sp"
+                        android:text=""
+                        android:textSize="20sp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="#FFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-<!--                    <Button-->
-<!--                        android:id="@+id/logout"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/logout"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/userDetails"-->
-<!--                        app:layout_constraintVertical_bias="0.382" />-->
 
                 </LinearLayout>
 
             </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
