@@ -40,13 +40,13 @@ public class ImdbResponse {
             // Default constructor required for calls to DataSnapshot.getValue(Movie.class)
         }
 
-        // Constructor for sample data
-        public Movie(String id, String title, Integer year, String details) {
-            this.id = id;
-            this.title = title;
-            this.year = year;
-            this.details = details;
-        }
+//        // Constructor for sample data
+//        public Movie(String id, String title, Integer year, String details) {
+//            this.id = id;
+//            this.title = title;
+//            this.year = year;
+//            this.details = details;
+//        }
 
         // Getters and setters
         public Image getImage() {

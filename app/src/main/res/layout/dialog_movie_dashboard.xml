@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
+            android:contentDescription="Movie Poster"
             tools:src="@drawable/ic_photo"/>
 
         <TextView
@@ -34,7 +35,6 @@
             android:textSize="18sp"
             android:paddingTop="4dp"
             tools:text="Movie Year"
-
             />
 
         <TextView
@@ -72,6 +72,31 @@
             android:paddingTop="8dp"
             tools:text="Movie Description"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/add_to_watchlist_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Add to Watchlist"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/red" />
+
+            <Button
+                android:id="@+id/another_feature_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Streaming Options"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/red" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
