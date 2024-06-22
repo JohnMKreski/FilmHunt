@@ -199,13 +199,13 @@ public class Dashboard extends BaseActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_movie_dashboard);
 
-        ImageView movieImageView = dialog.findViewById(R.id.dialog_movie_image);
-        TextView movieTitleTextView = dialog.findViewById(R.id.dialog_movie_title);
-        TextView movieYearTextView = dialog.findViewById(R.id.dialog_movie_year);
-        TextView movieTypeTextView = dialog.findViewById(R.id.dialog_movie_type);
-        TextView movieStarsTextView = dialog.findViewById(R.id.dialog_movie_stars);
-        TextView movieDirectorsTextView = dialog.findViewById(R.id.dialog_movie_directors);
-        TextView movieDetailsTextView = dialog.findViewById(R.id.dialog_movie_details);
+        ImageView movieImageView = dialog.findViewById(R.id.dash_dialog_movie_image);
+        TextView movieTitleTextView = dialog.findViewById(R.id.dash_dialog_movie_title);
+        TextView movieYearTextView = dialog.findViewById(R.id.dash_dialog_movie_year);
+        TextView movieTypeTextView = dialog.findViewById(R.id.dash_dialog_movie_type);
+        TextView movieStarsTextView = dialog.findViewById(R.id.dash_dialog_movie_stars);
+        TextView movieDirectorsTextView = dialog.findViewById(R.id.dash_dialog_movie_directors);
+        TextView moviePlotTextView = dialog.findViewById(R.id.dash_dialog_movie_plot);
         Button addToWatchlistButton = dialog.findViewById(R.id.add_to_watchlist_button);
         Button anotherFeatureButton = dialog.findViewById(R.id.another_feature_button);
 
@@ -215,7 +215,7 @@ public class Dashboard extends BaseActivity {
         movieStarsTextView.setText("Stars: " + movie.getStars());
         //TODO getDirectors getDetails from IMBD
         movieDirectorsTextView.setText("Directors: " + movie.getDetails());
-        movieDetailsTextView.setText("Details: " + movie.getDetails());
+        moviePlotTextView.setText("Details: " + movie.getPlot());
 
         if (movie.getImage() != null && movie.getImage().getImageUrl() != null) {
             Glide.with(this)

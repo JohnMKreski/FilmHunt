@@ -46,8 +46,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         //change setText when API is ready (Using sample data to test)
         holder.yearTextView.setText(String.valueOf(movie.getYear()));
         holder.starsTextView.setText("Stars: " + movie.getStars());
-        holder.genreTextView.setText("Type: " + movie.getType());
-        holder.detailsTextView.setText("Details: " + movie.getDetails());
+        holder.typeTextView.setText("Type: " + movie.getType());
+        holder.dirTextView.setText("Directors: " + movie.getDetails());
+        holder.plotTextView.setText("Plot: " + movie.getPlot());
 
 
 
@@ -71,16 +72,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movieImageView;
-        TextView titleTextView, yearTextView, detailsTextView, genreTextView, starsTextView;
+        TextView titleTextView, yearTextView, plotTextView, typeTextView, starsTextView, dirTextView;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             movieImageView = itemView.findViewById(R.id.movie_image);
             titleTextView = itemView.findViewById(R.id.movie_title);
             yearTextView = itemView.findViewById(R.id.movie_year);
-            genreTextView = itemView.findViewById(R.id.movie_genre);
+            typeTextView = itemView.findViewById(R.id.movie_type);
             starsTextView = itemView.findViewById(R.id.movie_stars);
-            detailsTextView = itemView.findViewById(R.id.movie_details);
+            dirTextView = itemView.findViewById(R.id.movie_directors);
+            plotTextView = itemView.findViewById(R.id.movie_plot);
         }
     }
 }

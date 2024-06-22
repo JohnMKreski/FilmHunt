@@ -34,6 +34,9 @@ public class ImdbResponse {
         @SerializedName("y")
         public int year;
 
+        @SerializedName("plot")
+        public String plot;
+
         public String details;
 
         public Movie() {
@@ -111,6 +114,14 @@ public class ImdbResponse {
 
         public void setYear(int year) {
             this.year = year;
+        }
+
+        public String getPlot() {
+            return plot;
+        }
+
+        public void setPlot(String plot) {
+            this.plot = plot;
         }
 
         public String getDetails() {

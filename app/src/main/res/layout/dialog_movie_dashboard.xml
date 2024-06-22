@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/dialog_movie_image"
+            android:id="@+id/dash_dialog_movie_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
@@ -19,7 +19,7 @@
             tools:src="@drawable/ic_photo"/>
 
         <TextView
-            android:id="@+id/dialog_movie_title"
+            android:id="@+id/dash_dialog_movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
@@ -29,7 +29,7 @@
             />
 
         <TextView
-            android:id="@+id/dialog_movie_year"
+            android:id="@+id/dash_dialog_movie_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -38,7 +38,7 @@
             />
 
         <TextView
-            android:id="@+id/dialog_movie_type"
+            android:id="@+id/dash_dialog_movie_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -47,7 +47,7 @@
             />
 
         <TextView
-            android:id="@+id/dialog_movie_stars"
+            android:id="@+id/dash_dialog_movie_stars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -56,7 +56,7 @@
             />
 
         <TextView
-            android:id="@+id/dialog_movie_directors"
+            android:id="@+id/dash_dialog_movie_directors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -65,37 +65,39 @@
             />
 
         <TextView
-            android:id="@+id/dialog_movie_details"
+            android:id="@+id/dash_dialog_movie_plot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:paddingTop="8dp"
-            tools:text="Movie Description"
+            tools:text="Movie Plot"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/add_to_watchlist_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:text="Add to Watchlist"
                 android:textColor="@android:color/white"
-                android:backgroundTint="@color/red" />
+                android:backgroundTint="@color/red"
+                />
 
             <Button
                 android:id="@+id/another_feature_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Streaming Options"
                 android:textColor="@android:color/white"
-                android:backgroundTint="@color/red" />
+                android:backgroundTint="@color/red"
+                />
         </LinearLayout>
 
     </LinearLayout>

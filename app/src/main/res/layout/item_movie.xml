@@ -37,11 +37,11 @@
             tools:text="Movie Year"/>
 
         <TextView
-            android:id="@+id/movie_genre"
+            android:id="@+id/movie_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            tools:text="Movie Genre"
+            tools:text="Movie Type"
             />
 
         <TextView
@@ -52,21 +52,21 @@
             tools:text="Movie Stars"
             />
 
-<!--        <TextView-->
-<!--            android:id="@+id/dialog_movie_directors"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16sp"-->
-<!--            android:paddingTop="8dp"-->
-<!--            tools:text="Movie Directors"-->
-<!--            />-->
+        <TextView
+            android:id="@+id/movie_directors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            tools:text="Movie Directors"
+            />
 
         <TextView
-            android:id="@+id/movie_details"
+            android:id="@+id/movie_plot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            tools:text="Movie Description"/>
+            android:visibility="invisible"
+            tools:text="Movie Plot"/>
 
     </LinearLayout>
 </LinearLayout>
