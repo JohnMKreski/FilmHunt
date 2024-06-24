@@ -61,7 +61,7 @@ public class Watchlist extends BaseActivity {
             fetchWatchlist();
 
             //Adding sample data
-            addSampleData();
+//            addSampleData();
         } else {
             Toast.makeText(this, "Please sign in to make a watchlist", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, Dashboard.class);
@@ -93,14 +93,20 @@ public class Watchlist extends BaseActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_movie_details);
 
-        ImageView movieImageView = dialog.findViewById(R.id.dialog_movie_image);
-        TextView movieTitleTextView = dialog.findViewById(R.id.dialog_movie_title);
-        TextView movieYearTextView = dialog.findViewById(R.id.dialog_movie_year);
-        TextView movieDetailsTextView = dialog.findViewById(R.id.dialog_movie_details);
+        ImageView movieImageView = dialog.findViewById(R.id.wat_dialog_movie_image);
+        TextView movieTitleTextView = dialog.findViewById(R.id.wat_dialog_movie_title);
+        TextView movieYearTextView = dialog.findViewById(R.id.wat_dialog_movie_year);
+        TextView movieTypeTextView = dialog.findViewById(R.id.wat_dialog_movie_type);
+        TextView movieStarsTextView = dialog.findViewById(R.id.wat_dialog_movie_stars);
+        TextView movieDirectorsTextView = dialog.findViewById(R.id.wat_dialog_movie_directors);
+        TextView moviePlotTextView = dialog.findViewById(R.id.wat_dialog_movie_plot);
 
         movieTitleTextView.setText(movie.getTitle());
         movieYearTextView.setText(String.valueOf(movie.getYear()));
-        movieDetailsTextView.setText(movie.getDetails());
+        movieTypeTextView.setText("Type: " + movie.getType());
+        movieStarsTextView.setText("Stars: " + movie.getStars());
+        movieDirectorsTextView.setText("Directors: " + movie.getDetails());
+        moviePlotTextView.setText("Plot: " + movie.getPlot());
 
         if (movie.getImage() != null && movie.getImage().getImageUrl() != null) {
             Glide.with(this)
@@ -113,16 +119,16 @@ public class Watchlist extends BaseActivity {
         dialog.show();
     }
 
-    private void addSampleData() {
-        watchlistHelper.addMovie(new Movie("movieId1", "Movie Title1", 2024, "Movie Details 1"));
-        watchlistHelper.addMovie(new Movie("movieId2", "Movie Title2", 2024, "Movie Details 2"));
-        watchlistHelper.addMovie(new Movie("movieId3", "Movie Title3", 2024, "Movie Details 3"));
-        watchlistHelper.addMovie(new Movie("movieId4", "Movie Title4", 2024, "Movie Details 4"));
-        watchlistHelper.addMovie(new Movie("movieId5", "Movie Title5", 2024, "Movie Details 5"));
-        watchlistHelper.addMovie(new Movie("movieId6", "Movie Title6", 2024, "Movie Details 6"));
-        watchlistHelper.addMovie(new Movie("movieId7", "Movie Title7", 2024, "Movie Details 7"));
-        watchlistHelper.addMovie(new Movie("movieId8", "Movie Title8", 2024, "Movie Details 8"));
-        watchlistHelper.addMovie(new Movie("movieId9", "Movie Title9", 2024, "Movie Details 9"));
-    }
+//    private void addSampleData() {
+//        watchlistHelper.addMovie(new Movie("movieId1", "Movie Title1", 2024, "Movie Details 1"));
+//        watchlistHelper.addMovie(new Movie("movieId2", "Movie Title2", 2024, "Movie Details 2"));
+//        watchlistHelper.addMovie(new Movie("movieId3", "Movie Title3", 2024, "Movie Details 3"));
+//        watchlistHelper.addMovie(new Movie("movieId4", "Movie Title4", 2024, "Movie Details 4"));
+//        watchlistHelper.addMovie(new Movie("movieId5", "Movie Title5", 2024, "Movie Details 5"));
+//        watchlistHelper.addMovie(new Movie("movieId6", "Movie Title6", 2024, "Movie Details 6"));
+//        watchlistHelper.addMovie(new Movie("movieId7", "Movie Title7", 2024, "Movie Details 7"));
+//        watchlistHelper.addMovie(new Movie("movieId8", "Movie Title8", 2024, "Movie Details 8"));
+//        watchlistHelper.addMovie(new Movie("movieId9", "Movie Title9", 2024, "Movie Details 9"));
+//    }
 }
 

@@ -24,6 +24,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.listener = listener;
     }
 
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(Movie movie);
     }
@@ -41,7 +45,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.titleTextView.setText(movie.title);
         //change setText when API is ready (Using sample data to test)
         holder.yearTextView.setText(String.valueOf(movie.getYear()));
-        holder.detailsTextView.setText(movie.getDetails());
+        holder.starsTextView.setText("Stars: " + movie.getStars());
+        holder.typeTextView.setText("Type: " + movie.getType());
+        holder.dirTextView.setText("Directors: " + movie.getDetails());
+        holder.plotTextView.setText("Plot: " + movie.getPlot());
+
+
 
         if (movie.getImage() != null && movie.getImage().getImageUrl() != null) {
             // Use Glide to load the movie image
@@ -63,14 +72,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movieImageView;
-        TextView titleTextView, yearTextView, detailsTextView;
+        TextView titleTextView, yearTextView, plotTextView, typeTextView, starsTextView, dirTextView;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             movieImageView = itemView.findViewById(R.id.movie_image);
             titleTextView = itemView.findViewById(R.id.movie_title);
             yearTextView = itemView.findViewById(R.id.movie_year);
-            detailsTextView = itemView.findViewById(R.id.movie_details);
+            typeTextView = itemView.findViewById(R.id.movie_type);
+            starsTextView = itemView.findViewById(R.id.movie_stars);
+            dirTextView = itemView.findViewById(R.id.movie_directors);
+            plotTextView = itemView.findViewById(R.id.movie_plot);
         }
     }
 }
