@@ -374,47 +374,47 @@
 
                         </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="10dp"
-                            android:layout_weight="1"
-                            android:hint="Password"
-                            app:boxStrokeColor="@color/design_default_color_primary"
-                            app:hintTextColor="@color/design_default_color_primary"
-                            >
+<!--                        <com.google.android.material.textfield.TextInputLayout-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_marginBottom="10dp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:hint="Password"-->
+<!--                            app:boxStrokeColor="@color/design_default_color_primary"-->
+<!--                            app:hintTextColor="@color/design_default_color_primary"-->
+<!--                            >-->
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                />
+<!--                            <com.google.android.material.textfield.TextInputEditText-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                />-->
 
 
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <Button
-                            android:id="@+id/passwordButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:backgroundTint="@color/pre_updateBtnColor"
-                            android:layout_marginLeft="10dp"
-                            android:fontFamily="@font/limelight"
-                            android:text="Update" />
-
-                    </LinearLayout>
+<!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
 <!--                        <Button-->
-<!--                            android:id="@+id/user_updateUserBtn"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:backgroundTint="#8C2727"-->
+<!--                            android:id="@+id/passwordButton"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:backgroundTint="@color/pre_updateBtnColor"-->
+<!--                            android:layout_marginLeft="10dp"-->
 <!--                            android:fontFamily="@font/limelight"-->
 <!--                            android:text="Update" />-->
+
+<!--                    </LinearLayout>-->
+
+                        <Button
+                            android:id="@+id/updatePassBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/pre_updateBtnColor"
+                            android:fontFamily="@font/limelight"
+                            android:text="Update Password" />
 
                         <Button
                             android:id="@+id/deleteButton"

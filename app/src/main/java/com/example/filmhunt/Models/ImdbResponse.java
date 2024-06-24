@@ -34,19 +34,22 @@ public class ImdbResponse {
         @SerializedName("y")
         public int year;
 
+        @SerializedName("plot")
+        public String plot;
+
         public String details;
 
         public Movie() {
             // Default constructor required for calls to DataSnapshot.getValue(Movie.class)
         }
 
-        // Constructor for sample data
-        public Movie(String id, String title, Integer year, String details) {
-            this.id = id;
-            this.title = title;
-            this.year = year;
-            this.details = details;
-        }
+//        // Constructor for sample data
+//        public Movie(String id, String title, Integer year, String details) {
+//            this.id = id;
+//            this.title = title;
+//            this.year = year;
+//            this.details = details;
+//        }
 
         // Getters and setters
         public Image getImage() {
@@ -111,6 +114,14 @@ public class ImdbResponse {
 
         public void setYear(int year) {
             this.year = year;
+        }
+
+        public String getPlot() {
+            return plot;
+        }
+
+        public void setPlot(String plot) {
+            this.plot = plot;
         }
 
         public String getDetails() {

@@ -3,11 +3,16 @@ package com.example.filmhunt;
 import static com.example.filmhunt.History.history;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +22,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,10 +33,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserAccount extends BaseActivity {
     private static final String TAG = "UserAccount";
+
     TextView nameText, usernameText, emailText, uidText, watchlistNum, foundFilmsNum;
-    TextInputEditText newNameText, newUsernameText, newEmailText, oldPasswordText, newPasswordText, newPassword2Text;
-    Button update_nameBtn, emailButton, passwordButton, deleteButton, update_usernameBtn, updatePassBtn;
+    TextInputEditText newNameText, newUsernameText, newEmailText;
+    Button update_nameBtn, emailButton, deleteButton, update_usernameBtn, updatePassBtn, dialog_confirm;
+
     DatabaseReference usersReference;
+    EditText oldPasswordText, newPasswordText, newPassword2Text;
+    ProgressDialog passwordDialog;
 
     Dialog simpleDialog;
     UserHelperClass helperClass = new UserHelperClass();
@@ -48,16 +59,11 @@ public class UserAccount extends BaseActivity {
         });
         setupNavigationDrawer(R.layout.activity_useraccount, R.id.toolbar, R.id.nav_view, R.id.useraccount, R.id.nav_head_userDetails);
 
-
-        // Firebase Auth is already initialized in BaseActivity
-//        if (user == null) {
-//            Intent intent = new Intent(getApplicationContext(), Login.class);
-//            startActivity(intent);
-//            finish();
-//            return;
-//        }
-
         handler = new Handler();
+
+        passwordDialog = new ProgressDialog(UserAccount.this);
+        passwordDialog.setCancelable(false);
+        passwordDialog.setMessage("Loading...");
 
         initializeViews();
         retrieveUserData();
@@ -68,29 +74,20 @@ public class UserAccount extends BaseActivity {
         nameText = findViewById(R.id.name);
         newNameText = findViewById(R.id.newNameText);
         update_nameBtn = findViewById(R.id.update_nameBtn);
-
+        updatePassBtn = findViewById(R.id.updatePassBtn);
 
         usernameText = findViewById(R.id.username);
         newUsernameText = findViewById(R.id.newUsernameText);
         update_usernameBtn = findViewById(R.id.update_usernameBtn);
 
-
         emailText = findViewById(R.id.email);
-//        emailText.setText(email);
         newEmailText = findViewById(R.id.newEmailText);
         emailButton = findViewById(R.id.emailButton);
 
 
         uidText = findViewById(R.id.uid);
-//        uidText.setText(uid);
-
-//        oldPasswordText = findViewById(R.id.oldPassword);
-//        newPasswordText = findViewById(R.id.newPassword);
-//        newPassword2Text = findViewById(R.id.newPassword2);
-//        updatePassBtn = findViewById(R.id.user_updatePasswordBtn);
-        passwordButton = findViewById(R.id.passwordButton);
-
         deleteButton = findViewById(R.id.deleteButton);
+
 
         watchlistNum = findViewById(R.id.watchlist_desc);
 
@@ -99,6 +96,7 @@ public class UserAccount extends BaseActivity {
         foundFilmsNum = findViewById(R.id.foundFilms_desc);
 
         foundFilmsNum.setText(history.size() + "");
+
 
         uidText.setText(user.getUid());
     }
@@ -259,57 +257,125 @@ public class UserAccount extends BaseActivity {
                 }).show();
             }
         });
+
+        //Update Password Btn
+        updatePassBtn.setOnClickListener(v -> {
+            changePasswordDialog(UserAccount.this);
+
+        });
+
+        //Delete Account Btn
+        deleteButton.setOnClickListener(v -> {
+            deleteAccount();
+        });
     }
 
+    private void changePasswordDialog(Context context) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.dialog_updatepassword, null);
 
-//        // Password
-//        passwordButton.setOnClickListener(v -> {
-//            String newPassword = newPasswordText.getText().toString();
-//            String confirmPassword = confirmPasswordText.getText().toString();
-//
-//            if (newPassword.isEmpty() || confirmPassword.isEmpty() || !newPassword.equals(confirmPassword)) {
-//                Toast.makeText(UserAccount.this, "Please enter and confirm the new password", Toast.LENGTH_SHORT).show();
-//            } else {
-//                String currentEmail = user.getEmail();
-//                promptForPassword(currentEmail, () -> {
-//                    new ConfirmationDialog(UserAccount.this, "Confirm Update", "Are you sure you want to update your password?", () -> {
-//                        // Perform the password update action in Firebase Authentication
-//                        user.updatePassword(newPassword)
-//                                .addOnSuccessListener(aVoid -> {
-//                                    Toast.makeText(UserAccount.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
-//                                    // Reset input fields
-//                                    newPasswordText.setText("");
-//                                    confirmPasswordText.setText("");
-//                                })
-//                                .addOnFailureListener(e -> Toast.makeText(UserAccount.this, "Password update failed", Toast.LENGTH_SHORT).show());
-//                    }).show();
-//                });
-//            }
-//        });
-//
-//        // Delete Account
-//        deleteButton.setOnClickListener(v -> {
-//            String currentEmail = user.getEmail();
-//            promptForPassword(currentEmail, () -> {
-//                new ConfirmationDialog(UserAccount.this, "Confirm Delete", "Are you sure you want to delete your account?", () -> {
-//                    // Perform the account deletion action in Firebase Authentication
-//                    user.delete()
-//                            .addOnSuccessListener(aVoid -> {
-//                                // Delete user data from the Firebase Realtime Database
-//                                usersReference.removeValue()
-//                                        .addOnSuccessListener(aVoid1 -> {
-//                                            Toast.makeText(UserAccount.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
-//                                            startActivity(new Intent(UserAccount.this, LoginActivity.class));
-//                                            finish();
-//                                        })
-//                                        .addOnFailureListener(e -> Toast.makeText(UserAccount.this, "Failed to delete user data", Toast.LENGTH_SHORT).show());
-//                            })
-//                            .addOnFailureListener(e -> Toast.makeText(UserAccount.this, "Account deletion failed", Toast.LENGTH_SHORT).show());
-//                }).show();
-//            });
-//        });
-//    }
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(dialogView);
+        //target UI txt fields
+        oldPasswordText = dialogView.findViewById(R.id.oldpassword);
+        newPasswordText = dialogView.findViewById(R.id.newpassword);
+        newPassword2Text = dialogView.findViewById(R.id.confirm_newpassword);
+        dialog_confirm = dialogView.findViewById(R.id.dialog_confirm);
+        Button dialog_cancel = dialogView.findViewById(R.id.dialog_cancel);
 
+        dialog_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v){
+                //capture values from UI txt fields
+                String oldPassword = String.valueOf(oldPasswordText.getText());
+                String newPassword = String.valueOf(newPasswordText.getText());
+                String newPassword2 = String.valueOf(newPassword2Text.getText());
+                //handles logic for input fields
+                if (oldPassword.isEmpty() || newPassword.isEmpty() || newPassword2.isEmpty()) {
+                    Toast.makeText(UserAccount.this, "Please enter all password fields.", Toast.LENGTH_SHORT).show();
+                } else if (!newPassword.equals(newPassword2)) {
+                    Toast.makeText(UserAccount.this, "New password does not match", Toast.LENGTH_SHORT).show();
+                } else if (oldPassword.equals(newPassword)) {
+                    Toast.makeText(UserAccount.this, "New password cannot match current password", Toast.LENGTH_SHORT).show();
+                } else if (!UserHelperClass.validatePassword(newPassword, UserAccount.this)) {
+                    //error message handled in UserHelperClass.java
+                } else {
+                    passwordDialog.show();
+                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), oldPassword);
+                    user.reauthenticate(credential).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            user.updatePassword(newPassword).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    //updates in Firebase Realtime db here like username, email, and name above
+                                    usersReference.child("password").setValue(newPassword)
+                                            .addOnSuccessListener(aVoid -> {
+                                                //these toast logs are only for testing and will not appear in app
+                                                Toast.makeText(UserAccount.this, "Password updated in database", Toast.LENGTH_SHORT).show();
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Toast.makeText(UserAccount.this, "Failed to update password in database", Toast.LENGTH_SHORT).show();
+                                            });
+
+                                    passwordDialog.dismiss();
+                                    Toast.makeText(UserAccount.this, "Password updated", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                } else {
+                                    passwordDialog.dismiss();
+                                    Toast.makeText(UserAccount.this, "Password update failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            passwordDialog.dismiss();
+                            Toast.makeText(UserAccount.this, "Current password is incorrect.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+        dialog_cancel.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+    }
+
+    private void deleteAccount() {
+        //using same reauth logic as email above
+        new ReauthDialog(UserAccount.this, password -> {
+            String currentEmail = user.getEmail();
+            reauthenticate(currentEmail, password, () -> {
+                //if reauthentication succeeds, use userReference to remove from Firebase Auth & Realtime Db
+                usersReference.removeValue().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        user.delete().addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                Toast.makeText(UserAccount.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(UserAccount.this, Login.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(UserAccount.this, "Failed to delete account from Auth", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(UserAccount.this, "Failed to delete account from Realtime Database", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }, () -> {
+                //if reauthentication fails
+                Toast.makeText(UserAccount.this, "Re-authentication failed", Toast.LENGTH_SHORT).show();
+            });
+        }).show();
+    }
+
+    //changed reauthenticate to protected, an access lower than the BaseActivty to become accessible in package
+    protected void reauthenticate(String email, String password, Runnable onSuccess, Runnable onFailure) {
+        AuthCredential credential = EmailAuthProvider.getCredential(email, password);
+        user.reauthenticate(credential).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                onSuccess.run();
+            } else {
+                onFailure.run();
+            }
+        });
+    }
 
     //Resets the input field after a user updates info
     private void resetTextEditField(TextInputEditText editText) {
@@ -317,79 +383,6 @@ public class UserAccount extends BaseActivity {
         editText.clearFocus();
         editText.setError(null);
     }
-
 }
 
-
-//
-//        passwordButton.
-//
-//setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick (View v){
-//
-//        String oldPassword = String.valueOf(oldPasswordText.getText());
-//        String newPassword = String.valueOf(newPasswordText.getText());
-//        String newPassword2 = String.valueOf(newPassword2Text.getText());
-//
-//        if (oldPassword.isEmpty() || newPassword.isEmpty() || newPassword2.isEmpty()) {
-//            Toast.makeText(UserAccount.this, "Please enter all password fields.", Toast.LENGTH_SHORT).show();
-//        } else if (!newPassword.equals(newPassword2)) {
-//            Toast.makeText(UserAccount.this, "New password does not match", Toast.LENGTH_SHORT).show();
-//        } else if (oldPassword.equals(newPassword)) {
-//            Toast.makeText(UserAccount.this, "New password cannot match current password", Toast.LENGTH_SHORT).show();
-//        } else if (!UserHelperClass.validatePassword(newPassword, UserAccount.this)) {
-//            //error message handled in UserHelperClass.java
-//        } else {
-//            AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), oldPassword);
-//            user.reauthenticate(credential).addOnCompleteListener(task -> {
-//                if (task.isSuccessful()) {
-//                    user.updatePassword(newPassword).addOnCompleteListener(task1 -> {
-//                        if (task1.isSuccessful()) {
-//                            Toast.makeText(UserAccount.this, "Password updated", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(UserAccount.this, "Password update failed", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                } else {
-//                    Toast.makeText(UserAccount.this, "Current password is incorrect.", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    }
-//});
-//
-//
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserAccount.this);
-//                alertBuilder.setTitle("Confirm Delete");
-//                alertBuilder.setMessage("Are you sure you want to delete your account?");
-//                alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        user.delete();
-//
-//                        Toast.makeText(UserAccount.this, "You have deleted your " +
-//                                "account", Toast.LENGTH_SHORT).show();
-//
-//                        Intent intent = new Intent(getApplicationContext(), Login.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                });
-//
-//                alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                alertBuilder.show();
-//            }
-//        });
 

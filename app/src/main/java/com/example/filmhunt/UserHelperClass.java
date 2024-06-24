@@ -3,12 +3,16 @@ package com.example.filmhunt;
 import android.content.Context;
 import android.widget.Toast;
 
-import java.util.regex.Pattern;
+import com.example.filmhunt.Models.ImdbResponse;
+
+import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UserHelperClass {
 
     private String name, username, email, uid, password;
+    private Map<String, ImdbResponse.Movie> watchlist; //to store a map of movies
 
     public UserHelperClass() {
     }
@@ -19,6 +23,7 @@ public class UserHelperClass {
         this.email = email;
         this.uid = uid;
         this.password = password;
+        this.watchlist = watchlist;
     }
 
     public String getName() {
@@ -50,6 +55,14 @@ public class UserHelperClass {
     }
 
     public String getPassword () { return password; }
+
+    public Map<String, ImdbResponse.Movie> getWatchlist() {
+        return watchlist;
+    }
+
+    public void setWatchlist(Map<String, ImdbResponse.Movie> watchlist) {
+        this.watchlist = watchlist;
+    }
 
     // Email validation
     public static boolean validateEmail(String email, Context context) {
