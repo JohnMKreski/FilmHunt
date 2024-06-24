@@ -1,6 +1,8 @@
 package com.example.filmhunt;
 
 import android.app.Dialog;
+
+import static com.example.filmhunt.History.history;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
