@@ -1,5 +1,7 @@
 package com.example.filmhunt;
 
+import static com.example.filmhunt.History.history;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserAccount extends BaseActivity {
     private static final String TAG = "UserAccount";
-    TextView nameText, usernameText, emailText, uidText;
+    TextView nameText, usernameText, emailText, uidText, watchlistNum, foundFilmsNum;
     TextInputEditText newNameText, newUsernameText, newEmailText, oldPasswordText, newPasswordText, newPassword2Text;
     Button update_nameBtn, emailButton, passwordButton, deleteButton, update_usernameBtn, updatePassBtn;
     DatabaseReference usersReference;
@@ -79,7 +81,6 @@ public class UserAccount extends BaseActivity {
         emailButton = findViewById(R.id.emailButton);
 
 
-
         uidText = findViewById(R.id.uid);
 //        uidText.setText(uid);
 
@@ -91,6 +92,13 @@ public class UserAccount extends BaseActivity {
 
         deleteButton = findViewById(R.id.deleteButton);
 
+        watchlistNum = findViewById(R.id.watchlist_desc);
+
+        watchlistNum.setText(history.size()+ "");
+
+        foundFilmsNum = findViewById(R.id.foundFilms_desc);
+
+        foundFilmsNum.setText(history.size() + "");
 
         uidText.setText(user.getUid());
     }

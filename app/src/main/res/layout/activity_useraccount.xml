@@ -191,7 +191,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
                                     android:includeFontPadding="false"
-                                    android:text="12"
+                                    android:text=""
                                     android:textColor="@color/white"
                                     android:textSize="15dp"
 
@@ -241,7 +241,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
                                     android:includeFontPadding="false"
-                                    android:text="25"
+                                    android:text=""
                                     android:textColor="@color/white"
                                     android:textSize="15dp" />
 

@@ -1,5 +1,7 @@
 package com.example.filmhunt;
 
+import static com.example.filmhunt.History.history;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,7 +63,7 @@ public class Watchlist extends BaseActivity {
             fetchWatchlist();
 
             //Adding sample data
-            addSampleData();
+            //addSampleData();
         } else {
             Toast.makeText(this, "Please sign in to make a watchlist", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, Dashboard.class);
@@ -78,6 +80,7 @@ public class Watchlist extends BaseActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Movie movie = snapshot.getValue(Movie.class);
                     movieList.add(movie);
+
                 }
                 movieAdapter.notifyDataSetChanged();
             }
@@ -109,6 +112,8 @@ public class Watchlist extends BaseActivity {
         } else {
             movieImageView.setImageResource(R.drawable.ic_photo);
         }
+
+        history.add(movie);
 
         dialog.show();
     }

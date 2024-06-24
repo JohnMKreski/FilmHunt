@@ -18,6 +18,11 @@
             android:name=".Watchlist"
             android:exported="false" />
         <activity
+            android:name=".History"
+            android:exported="false"
+            android:theme="@style/Base.Theme.FilmHunt" />
+
+        <activity
             android:name=".UserAccount"
             android:exported="false"
             android:theme="@style/Base.Theme.FilmHunt" />

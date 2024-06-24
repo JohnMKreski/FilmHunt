@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -34,7 +35,14 @@ public class ContactDialog extends Dialog {
         cancelButton = contactView.findViewById(R.id.contact_cancel);
         sendButton.setOnClickListener(v -> {
             String message = contactInput.getText().toString();
-            onConfirm.execute(message);
+            if (contactInput.getText().toString().isEmpty()) {
+
+                Toast.makeText(context, "Please enter a message", Toast.LENGTH_SHORT).show();
+
+            } else{
+                onConfirm.execute(message);
+            }
+
             dismiss();
 
         });

@@ -1,5 +1,7 @@
 package com.example.filmhunt;
 
+import static com.example.filmhunt.History.history;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;

@@ -14,6 +14,7 @@ public class TitleHelperClass {
         titleMap.put(R.id.dashboard, "Dashboard");
         titleMap.put(R.id.useraccount, "User Account");
         titleMap.put(R.id.watchlist, "Watchlist");
+        titleMap.put(R.id.history, "Found Films");
         // Add more mappings as needed
     }
 

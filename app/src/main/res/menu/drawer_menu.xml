@@ -9,6 +9,10 @@
         android:title="Watchlist"
         android:icon="@drawable/ic_favorite" />
     <item
+        android:id="@+id/nav_history"
+        android:title="Found Films"
+        android:icon="@drawable/ic_favorite" />
+    <item
         android:id="@+id/nav_userSettings"
         android:title="User Account"
         android:icon="@drawable/ic_usersettings_foreground" />

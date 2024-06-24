@@ -1,5 +1,8 @@
 package com.example.filmhunt;
 
+import static com.example.filmhunt.History.history;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +19,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.filmhunt.Models.ImdbResponse;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -88,27 +92,10 @@ public class Settings extends BaseActivity {
         watch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WatchlistHelperClass helper = new WatchlistHelperClass(user.getUid());
 
-                helper.getWatchlist(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                clearWatchlist();
 
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            ImdbResponse.Movie movie = snapshot.getValue(ImdbResponse.Movie.class);
-
-                            helper.removeMovie(movie.id);
-                            helper.removeMovie(movie.getId());
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("WatchlistActivity", "Error fetching watchlist", databaseError.toException());
-                    }
-                });
-
+                Toast.makeText(Settings.this, "Watchlist has been cleared", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -117,14 +104,26 @@ public class Settings extends BaseActivity {
         hist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO waiting until other stuff is ready
+                history.clear();
+                Toast.makeText(Settings.this, "History has been cleared", Toast.LENGTH_SHORT).show();
             }
         });
 
         cache.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO waiting until other stuff is ready
+
+                clearWatchlist();
+                history.clear();
+                auth.signOut();
+
+                Toast.makeText(Settings.this, "Cache has been cleared", Toast.LENGTH_SHORT).show();
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
+
             }
         });
 
@@ -135,48 +134,84 @@ public class Settings extends BaseActivity {
 
                 new ContactDialog(Settings.this, message -> {
 
-                    if (messageInput.getText().toString().isEmpty()) {
+                    Thread thread = new Thread(new Runnable(){
+                        @Override
+                        public void run() {
+                            try {
 
-                        Toast.makeText(Settings.this, "Please enter a message",
-                                Toast.LENGTH_SHORT).show();
+                                Properties properties = new Properties();
+                                properties.put("mail.smtp.auth", "true");
+                                properties.put("mail.smtp.starttls.enable", "true");
+                                properties.put("mail.smtp.host", "live.smtp.mailtrap.io");
+                                properties.put("mail.smtp.port", "587");
 
-                    } else{
+                                Authenticator authenticator = new Authenticator() {
+                                    protected PasswordAuthentication getPasswordAuthentication() {
+                                        return new PasswordAuthentication("api", "4286e60303b64d4c39a662e2c21fa686");
+                                    }
+                                };
+                                Session session = Session.getInstance(properties, authenticator);
 
-                        Properties properties = new Properties();
-                        properties.put("mail.smtp.auth", "true");
-                        properties.put("mail.smtp.starttls.enable", "true");
-                        properties.put("mail.smtp.host", "live.smtp.mailtrap.io");
-                        properties.put("mail.smtp.port", "587");
+                                try {
 
-                        Authenticator authenticator = new Authenticator() {
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication("api", "4286e60303b64d4c39a662e2c21fa686");
+                                    Message mess = new MimeMessage(session);
+
+                                    mess.setFrom(new InternetAddress("mailtrap@demomailtrap.com"));
+
+                                    mess.setRecipients(Message.RecipientType.TO,
+                                            InternetAddress.parse("camnc2003@gmail.com"));
+
+                                    mess.setSubject("New FilmHunt User Message");
+
+                                    mess.setText(message);
+
+                                    Transport.send(mess);
+
+                                } catch (MessagingException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                            } catch (Exception e) {
+                                //Toast.makeText(Settings.this, "Unable to send message", Toast.LENGTH_SHORT).show();
+                                throw e;
                             }
-                        };
-                        Session session = Session.getInstance(properties, authenticator);
-
-                        try {
-                            //create a MimeMessage object
-                            Message mess = new MimeMessage(session);
-                            //set From email field
-                            mess.setFrom(new InternetAddress("demomailtrap.com"));
-                            //set To email field
-                            mess.setRecipients(Message.RecipientType.TO,
-                                    InternetAddress.parse("camnc2003@gmail.com"));
-                            //set email subject field
-                            mess.setSubject("New FilmHunt USer Message");
-                            //set the content of the email message
-                            mess.setText(message);
-                            //send the email message
-                            Transport.send(mess);
-
-                        } catch (MessagingException e) {
-                            throw new RuntimeException(e);
                         }
-                    }
-                });
+                    });
+                    thread.start();
+
+
+
+
+
+                }).show();
             }
         });
+    }
+
+    private void clearWatchlist(){
+
+        WatchlistHelperClass helper = new WatchlistHelperClass(user.getUid());
+
+        helper.getWatchlist(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ImdbResponse.Movie movie = snapshot.getValue(ImdbResponse.Movie.class);
+
+                    helper.removeMovie(movie.id);
+                    helper.removeMovie(movie.getId());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("WatchlistActivity", "Error fetching watchlist", databaseError.toException());
+            }
+        });
+
+
     }
 
 }
