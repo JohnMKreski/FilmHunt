@@ -42,6 +42,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     protected Runnable checkVerificationRunnable;
 
 
+
     //doing a check to see if user is initialized before using drawer
     protected void checkAuthentication() {
         if (user == null) {
@@ -144,6 +145,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, Watchlist.class);
             startActivity(intent);
         }
+
+        if (id == R.id.nav_history){
+            Intent intent = new Intent(this, History.class);
+            startActivity(intent);
+        }
+
         if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getApplicationContext(), Login.class);

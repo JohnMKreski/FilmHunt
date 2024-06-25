@@ -1,6 +1,8 @@
 package com.example.filmhunt;
 
 import android.app.Dialog;
+
+import static com.example.filmhunt.History.history;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -242,6 +244,7 @@ public class Dashboard extends BaseActivity {
             dialog.dismiss();
         });
 
+        history.add(movie);
         dialog.show();
     }
 
