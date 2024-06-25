@@ -1,7 +1,6 @@
 package com.example.filmhunt;
 
 import static com.example.filmhunt.History.history;
-import static com.example.filmhunt.Watchlist.movieList;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -26,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,17 +35,17 @@ import com.google.firebase.database.ValueEventListener;
 public class UserAccount extends BaseActivity {
     private static final String TAG = "UserAccount";
 
-    TextView nameText, usernameText, emailText, uidText, watchlistNum, foundFilmsNum;
+    TextView nameText, usernameText, emailText, uidText, watchlistDesc, foundFilmsDesc;
     TextInputEditText newNameText, newUsernameText, newEmailText;
     Button update_nameBtn, emailButton, deleteButton, update_usernameBtn, updatePassBtn, dialog_confirm;
 
-    DatabaseReference usersReference;
+    DatabaseReference usersReference, watchlistReference;
     EditText oldPasswordText, newPasswordText, newPassword2Text;
     ProgressDialog passwordDialog;
 
     Dialog simpleDialog;
-    UserHelperClass helperClass = new UserHelperClass();
-
+    private UserHelperClass userHelperClass = new UserHelperClass();
+    private WatchlistHelperClass watchlistHelperClass;
     private Handler handler;
 
     @Override
@@ -89,56 +89,58 @@ public class UserAccount extends BaseActivity {
         uidText = findViewById(R.id.uid);
         deleteButton = findViewById(R.id.deleteButton);
 
+        watchlistDesc = findViewById(R.id.watchlist_desc);
+        foundFilmsDesc = findViewById(R.id.foundFilms_desc);
 
-        watchlistNum = findViewById(R.id.watchlist_desc);
+        //made into method calling watchlist helper class
+//        watchlistNum.setText(movieList.size() + "");
+        foundFilmsDesc.setText(history.size() + "");
 
-        watchlistNum.setText(movieList.size() + "");
-
-        foundFilmsNum = findViewById(R.id.foundFilms_desc);
-
-        foundFilmsNum.setText(history.size() + "");
-
-
-        uidText.setText(user.getUid());
     }
 
     //Function to retrieve User Info
     public void retrieveUserData() {
-        String uid = user.getUid();
-//        String email = user.getEmail();
-//        String mailID = email.replace("@", "").replace(".", "");
-//        Log.d(TAG, "Formatted mailID: " + mailID);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        //retrieve data ref to specific user
+        if (user == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String uid = user.getUid();
+
+        // Retrieve data ref to specific user data
         usersReference = FirebaseDatabase.getInstance().getReference("users").child(uid);
-//      Log.d(TAG, "Database Reference Path: " + usersReference.toString());
+        watchlistReference = FirebaseDatabase.getInstance().getReference("users").child(uid).child("watchlist");
 
         usersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//            Log.d(TAG, "DataSnapshot: " + snapshot.toString());
-                helperClass = snapshot.getValue(UserHelperClass.class);
-                if (helperClass != null) {
-//                    Log.d(TAG, "Name: " + helperClass.getName());
-//                    Log.d(TAG, "Username: " + helperClass.getUsername());
-//                    Log.d(TAG, "UID: " + user.getUid());
-                    nameText.setText(helperClass.getName());
-                    usernameText.setText(helperClass.getUsername());
+                userHelperClass = snapshot.getValue(UserHelperClass.class);
+                if (userHelperClass != null) {
+                    nameText.setText(userHelperClass.getName());
+                    usernameText.setText(userHelperClass.getUsername());
                     emailText.setText(user.getEmail());
                     uidText.setText(user.getUid());
-
-                    //Dynamically matches the hints to the users info
-//                    newUsernameText.setHint(helperClass.getUsername());
-//                    newNameText.setHint(helperClass.getName());
                 }
-//                else{
-//                    Log.d(TAG, "helperClass is null");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e(TAG, "DatabaseError: " + error.getMessage());
                 Toast.makeText(UserAccount.this, "Could not get User Data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        watchlistHelperClass = new WatchlistHelperClass(uid);
+        watchlistHelperClass.getWatchlistCount(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                watchlistDesc.setText(String.valueOf(count));           }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(UserAccount.this, "Failed to load watchlist count", Toast.LENGTH_SHORT).show();
             }
         });
     }

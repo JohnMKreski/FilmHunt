@@ -14,6 +14,8 @@ public class UserHelperClass {
     private String name, username, email, uid, password;
     private Map<String, ImdbResponse.Movie> watchlist; //to store a map of movies
 
+
+
     public UserHelperClass() {
     }
 
@@ -23,7 +25,7 @@ public class UserHelperClass {
         this.email = email;
         this.uid = uid;
         this.password = password;
-        this.watchlist = watchlist;
+//        this.watchlist = watchlist;
     }
 
     public String getName() {
@@ -56,13 +58,13 @@ public class UserHelperClass {
 
     public String getPassword () { return password; }
 
-    public Map<String, ImdbResponse.Movie> getWatchlist() {
-        return watchlist;
-    }
-
-    public void setWatchlist(Map<String, ImdbResponse.Movie> watchlist) {
-        this.watchlist = watchlist;
-    }
+//    public Map<String, ImdbResponse.Movie> getWatchlist() {
+//        return watchlist;
+//    }
+//
+//    public void setWatchlist(Map<String, ImdbResponse.Movie> watchlist) {
+//        this.watchlist = watchlist;
+//    }
 
     // Email validation
     public static boolean validateEmail(String email, Context context) {
