@@ -244,6 +244,7 @@ public class Dashboard extends BaseActivity {
             dialog.dismiss();
         });
 
+        history.add(movie);
         dialog.show();
     }
 

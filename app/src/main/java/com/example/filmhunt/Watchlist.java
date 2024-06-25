@@ -34,7 +34,7 @@ public class Watchlist extends BaseActivity {
     private FirebaseUser user;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
-    private List<Movie> movieList;
+    public static List<Movie> movieList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,6 @@ public class Watchlist extends BaseActivity {
             recyclerView = findViewById(R.id.recycler_view);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            movieList = new ArrayList<>();
             movieAdapter = new MovieAdapter(movieList, this::showMovieDetailsDialog);
             recyclerView.setAdapter(movieAdapter);
 
@@ -85,6 +84,7 @@ public class Watchlist extends BaseActivity {
                     movieList.add(movie);
 
                 }
+
                 movieAdapter.notifyDataSetChanged();
             }
 

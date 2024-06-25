@@ -1,6 +1,7 @@
 package com.example.filmhunt;
 
 import static com.example.filmhunt.History.history;
+import static com.example.filmhunt.Watchlist.movieList;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -91,7 +92,7 @@ public class UserAccount extends BaseActivity {
 
         watchlistNum = findViewById(R.id.watchlist_desc);
 
-        watchlistNum.setText(history.size()+ "");
+        watchlistNum.setText(movieList.size() + "");
 
         foundFilmsNum = findViewById(R.id.foundFilms_desc);
 
