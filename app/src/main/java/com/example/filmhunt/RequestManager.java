@@ -2,6 +2,7 @@ package com.example.filmhunt;
 
 import com.example.filmhunt.Models.ImdbResponse;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -14,4 +15,11 @@ public interface RequestManager {
     })
     @GET("auto-complete")
     Call<ImdbResponse> getMovies(@Query("q") String query);
+
+    @Headers({
+            "x-rapidapi-host: imdb8.p.rapidapi.com",
+            "x-rapidapi-key: aa1fc7ea12mshd49ba34ef21f2fdp188742jsn014d913a39ff"
+    })
+    @GET("title/v2/get-overview")
+    Call<ResponseBody> getMovieSummary(@Query("tconst") String id);
 }
