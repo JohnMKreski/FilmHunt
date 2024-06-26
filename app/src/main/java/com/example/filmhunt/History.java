@@ -34,34 +34,40 @@ public class History extends BaseActivity {
         });
         setupNavigationDrawer(R.layout.activity_history, R.id.toolbar, R.id.nav_view, R.id.history, R.id.nav_head_userDetails);
 
-
         recyclerView = findViewById(R.id.histRecycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         movieAdapter = new MovieAdapter(history, this::showMovieDetailsDialog);
         recyclerView.setAdapter(movieAdapter);
-
     }
 
-    private void showMovieDetailsDialog(ImdbResponse.Movie movie) {
-        Dialog dialog = new Dialog(this);
+    private void showMovieDetailsDialog(ImdbResponse.Movie movie, Dialog dialog) {
         dialog.setContentView(R.layout.dialog_movie_details);
 
         ImageView movieImageView = dialog.findViewById(R.id.wat_dialog_movie_image);
         TextView movieTitleTextView = dialog.findViewById(R.id.wat_dialog_movie_title);
-        TextView movieYearTextView = dialog.findViewById(R.id.wat_dialog_movie_year);
+        TextView movieDetailsTextView = dialog.findViewById(R.id.wat_dialog_movie_details);
         TextView movieTypeTextView = dialog.findViewById(R.id.wat_dialog_movie_type);
         TextView movieStarsTextView = dialog.findViewById(R.id.wat_dialog_movie_stars);
         TextView movieDirectorsTextView = dialog.findViewById(R.id.wat_dialog_movie_directors);
         TextView moviePlotTextView = dialog.findViewById(R.id.wat_dialog_movie_plot);
 
         movieTitleTextView.setText(movie.getTitle());
-        movieYearTextView.setText(String.valueOf(movie.getYear()));
         movieTypeTextView.setText("Type: " + movie.getType());
         movieStarsTextView.setText("Stars: " + movie.getStars());
         movieDirectorsTextView.setText("Directors: " + movie.getDetails());
-        moviePlotTextView.setText("Plot: " + movie.getPlot());
+
+        String movieDetails = movie.getYear() + " • " +
+                (movie.getCertificateData() != null ? movie.getCertificateData().getRating() : "N/A") + " • " +
+                (movie.getRuntimeData() != null ? movie.getRuntimeData().getFormattedRuntime() : "N/A");
+        movieDetailsTextView.setText(movieDetails);
+
+        if (movie.getPlotData() != null && movie.getPlotData().getPlotText() != null) {
+            String plotText = movie.getPlotData().getPlotText().getPlainText();
+            moviePlotTextView.setText("Plot: " + plotText);
+        } else {
+            moviePlotTextView.setText("Plot: N/A");
+        }
 
         if (movie.getImage() != null && movie.getImage().getImageUrl() != null) {
             Glide.with(this)
@@ -71,9 +77,6 @@ public class History extends BaseActivity {
             movieImageView.setImageResource(R.drawable.ic_photo);
         }
 
-
         dialog.show();
     }
-
-
 }

@@ -1,5 +1,8 @@
 package com.example.filmhunt;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +18,7 @@ import com.example.filmhunt.Models.ImdbResponse.Movie;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-
+    private static final String TAG = "MovieAdapter";
     private List<Movie> movies;
     private OnItemClickListener listener;
 
@@ -24,12 +27,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.listener = listener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
+        notifyDataSetChanged();
+    }
+
+    public void updateMovie(int position, Movie movie) {
+        movies.set(position, movie);
+        notifyItemChanged(position);
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Movie movie);
+        void onItemClick(Movie movie, Dialog dialog);
     }
 
     @NonNull
@@ -42,15 +52,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
-        holder.titleTextView.setText(movie.title);
-        //change setText when API is ready (Using sample data to test)
+        holder.titleTextView.setText(movie.getTitle());
         holder.yearTextView.setText(String.valueOf(movie.getYear()));
         holder.starsTextView.setText("Stars: " + movie.getStars());
         holder.typeTextView.setText("Type: " + movie.getType());
         holder.dirTextView.setText("Directors: " + movie.getDetails());
-        holder.plotTextView.setText("Plot: " + movie.getPlot());
 
-
+        // Accessing plotData and plotText with null checks to get plainText (plot is here)
+        String plotText = "No plot available";
+        if (movie.getPlotData() != null && movie.getPlotData().getPlotText() != null) {
+            plotText = movie.getPlotData().getPlotText().getPlainText();
+        }
+        holder.plotTextView.setText("Plot: " + plotText);
 
         if (movie.getImage() != null && movie.getImage().getImageUrl() != null) {
             // Use Glide to load the movie image
@@ -58,10 +71,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     .load(movie.getImage().getImageUrl())
                     .into(holder.movieImageView);
         } else {
-            // Handle the case where there is no image available
-            holder.movieImageView.setImageResource(R.drawable.ic_photo); // Set a placeholder image
+            // If no image available, uses placeholder
+            holder.movieImageView.setImageResource(R.drawable.ic_photo);
         }
-        holder.itemView.setOnClickListener(v -> listener.onItemClick(movie));
+        holder.itemView.setOnClickListener(v -> {
+            Log.d(TAG, "Clicked movie ID: " + movie.getId());
+            Dialog dialog = new Dialog(holder.itemView.getContext());
+            dialog.setContentView(R.layout.dialog_movie_dashboard);
+            listener.onItemClick(movie, dialog);
+        });
     }
 
     @Override
@@ -86,5 +104,3 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
     }
 }
-
-

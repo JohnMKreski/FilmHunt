@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        
 
         <ImageView
             android:id="@+id/dash_dialog_movie_image"
@@ -30,12 +29,12 @@
             />
 
         <TextView
-            android:id="@+id/dash_dialog_movie_year"
+            android:id="@+id/dash_dialog_movie_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:paddingTop="4dp"
-            tools:text="Movie Year"
+            tools:text="2001 • PG • 2h 32m"
             />
 
         <TextView

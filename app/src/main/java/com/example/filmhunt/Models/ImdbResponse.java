@@ -1,15 +1,15 @@
 package com.example.filmhunt.Models;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class ImdbResponse {
-    // This class can be edited to include more properties from the api
+
     @SerializedName("d")
     public List<Movie> movies;
 
     public static class Movie {
+
         @SerializedName("i")
         public Image image;
 
@@ -35,7 +35,13 @@ public class ImdbResponse {
         public int year;
 
         @SerializedName("plot")
-        public String plot;
+        public PlotData plotData;
+
+        @SerializedName("certificate")
+        public CertificateData certificateData;
+
+        @SerializedName("runtime")
+        public RuntimeData runtimeData;
 
         public String details;
 
@@ -43,15 +49,6 @@ public class ImdbResponse {
             // Default constructor required for calls to DataSnapshot.getValue(Movie.class)
         }
 
-//        // Constructor for sample data
-//        public Movie(String id, String title, Integer year, String details) {
-//            this.id = id;
-//            this.title = title;
-//            this.year = year;
-//            this.details = details;
-//        }
-
-        // Getters and setters
         public Image getImage() {
             return image;
         }
@@ -116,20 +113,140 @@ public class ImdbResponse {
             this.year = year;
         }
 
-        public String getPlot() {
-            return plot;
-        }
-
-        public void setPlot(String plot) {
-            this.plot = plot;
-        }
-
         public String getDetails() {
             return details;
         }
 
         public void setDetails(String details) {
             this.details = details;
+        }
+
+        public PlotData getPlotData() {
+            return plotData;
+        }
+
+        public void setPlotData(PlotData plotData) {
+            this.plotData = plotData;
+        }
+
+        public CertificateData getCertificateData() {
+            return certificateData;
+        }
+
+        public void setCertificateData(CertificateData certificateData) {
+            this.certificateData = certificateData;
+        }
+
+        public RuntimeData getRuntimeData() {
+            return runtimeData;
+        }
+
+        public void setRuntimeData(RuntimeData runtimeData) {
+            this.runtimeData = runtimeData;
+        }
+
+        @Override
+        public String toString() {
+            return "Movie{" +
+                    "image=" + image +
+                    ", id='" + id + '\'' +
+                    ", title='" + title + '\'' +
+                    ", type='" + type + '\'' +
+                    ", qid='" + qid + '\'' +
+                    ", rank=" + rank +
+                    ", stars='" + stars + '\'' +
+                    ", year=" + year +
+                    ", plotData=" + plotData +
+                    ", details='" + details + '\'' +
+                    ", certificateData='" + certificateData + '\'' +
+                    ", runtimeData='" + runtimeData + '\'' +
+                    '}';
+        }
+
+        public static class PlotData {
+            @SerializedName("plotText")
+            private PlotText plotText;
+
+            public PlotText getPlotText() {
+                return plotText;
+            }
+
+            public void setPlotText(PlotText plotText) {
+                this.plotText = plotText;
+            }
+
+            @Override
+            public String toString() {
+                return "PlotData{" +
+                        "plotText=" + plotText +
+                        '}';
+            }
+
+            public static class PlotText {
+                @SerializedName("plainText")
+                private String plainText;
+
+                public String getPlainText() {
+                    return plainText;
+                }
+
+                public void setPlainText(String plainText) {
+                    this.plainText = plainText;
+                }
+
+                @Override
+                public String toString() {
+                    return "PlotText{" +
+                            "plainText='" + plainText + '\'' +
+                            '}';
+                }
+            }
+        }
+
+        public static class CertificateData {
+            @SerializedName("rating")
+            public String rating;
+
+            public String getRating() {
+                return rating;
+            }
+
+            public void setRating(String rating) {
+                this.rating = rating;
+            }
+
+            @Override
+            public String toString() {
+                return "CertificateData{" +
+                        "rating='" + rating + '\'' +
+                        '}';
+            }
+        }
+
+        public static class RuntimeData {
+            @SerializedName("seconds")
+            public int seconds;
+
+            public int getSeconds() {
+                return seconds;
+            }
+
+            public void setSeconds(int seconds) {
+                this.seconds = seconds;
+            }
+
+            public String getFormattedRuntime() {
+                int hours = seconds / 3600;
+                int minutes = (seconds % 3600) / 60;
+                return String.format("%dh %dmin", hours, minutes);
+            }
+
+            @Override
+            public String toString() {
+                return "RuntimeData{" +
+                        "seconds=" + seconds +
+                        '}';
+            }
         }
 
         public static class Image {
@@ -144,7 +261,6 @@ public class ImdbResponse {
 
             public Image() {}
 
-            // Getters and setters
             public int getHeight() {
                 return height;
             }
@@ -167,6 +283,15 @@ public class ImdbResponse {
 
             public void setWidth(int width) {
                 this.width = width;
+            }
+
+            @Override
+            public String toString() {
+                return "Image{" +
+                        "height=" + height +
+                        ", imageUrl='" + imageUrl + '\'' +
+                        ", width=" + width +
+                        '}';
             }
         }
     }
