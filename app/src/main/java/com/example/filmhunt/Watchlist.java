@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -106,6 +107,7 @@ public class Watchlist extends BaseActivity {
         TextView movieStarsTextView = dialog.findViewById(R.id.wat_dialog_movie_stars);
         TextView movieDirectorsTextView = dialog.findViewById(R.id.wat_dialog_movie_directors);
         TextView moviePlotTextView = dialog.findViewById(R.id.wat_dialog_movie_plot);
+        Button removeFromWatchlistButton = dialog.findViewById(R.id.remove_from_watchlist_button);
 
         movieTitleTextView.setText(movie.getTitle());
         movieYearTextView.setText(String.valueOf(movie.getYear()));
@@ -122,9 +124,19 @@ public class Watchlist extends BaseActivity {
             movieImageView.setImageResource(R.drawable.ic_photo);
         }
 
-        history.add(movie);
+        removeFromWatchlistButton.setOnClickListener(v -> {
+            int position = movieList.indexOf(movie);  // Get the current position of the movie in the list
+            watchlistHelper.removeMovie(movie.getId());
+            movieList.remove(position);
+            movieAdapter.notifyItemRemoved(position);  // Notify the adapter about the item being removed
+            Toast.makeText(this, "Movie removed from watchlist", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+
 
         dialog.show();
+        history.add(movie);
     }
 
 //    private void addSampleData() {

@@ -73,5 +73,32 @@
             tools:text="Movie Plot"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/remove_from_watchlist_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Remove from Watchlist"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/red"
+                />
+
+            <Button
+                android:id="@+id/streaming_options_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Streaming Options"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/red"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
