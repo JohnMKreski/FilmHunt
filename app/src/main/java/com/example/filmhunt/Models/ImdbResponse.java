@@ -9,6 +9,7 @@ public class ImdbResponse {
     public List<Movie> movies;
 
     public static class Movie {
+        private List<String> directors;
 
         @SerializedName("i")
         public Image image;
@@ -43,7 +44,7 @@ public class ImdbResponse {
         @SerializedName("runtime")
         public RuntimeData runtimeData;
 
-        public String details;
+//        public String details;
 
         public Movie() {
             // Default constructor required for calls to DataSnapshot.getValue(Movie.class)
@@ -113,13 +114,21 @@ public class ImdbResponse {
             this.year = year;
         }
 
-        public String getDetails() {
-            return details;
+        public List<String> getDirectors() {
+            return directors;
         }
 
-        public void setDetails(String details) {
-            this.details = details;
+        public void setDirectors(List<String> directors) {
+            this.directors = directors;
         }
+
+//        public String getDetails() {
+//            return details;
+//        }
+//
+//        public void setDetails(String details) {
+//            this.details = details;
+//        }
 
         public PlotData getPlotData() {
             return plotData;
@@ -157,7 +166,7 @@ public class ImdbResponse {
                     ", stars='" + stars + '\'' +
                     ", year=" + year +
                     ", plotData=" + plotData +
-                    ", details='" + details + '\'' +
+                    ", directors='" + directors + '\'' +
                     ", certificateData='" + certificateData + '\'' +
                     ", runtimeData='" + runtimeData + '\'' +
                     '}';

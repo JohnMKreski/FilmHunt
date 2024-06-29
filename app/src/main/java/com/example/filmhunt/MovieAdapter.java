@@ -2,6 +2,7 @@ package com.example.filmhunt;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.yearTextView.setText(String.valueOf(movie.getYear()));
         holder.starsTextView.setText("Stars: " + movie.getStars());
         holder.typeTextView.setText("Type: " + movie.getType());
-        holder.dirTextView.setText("Directors: " + movie.getDetails());
+
+        // Initially set directors text to "Loading..." or similar
+        holder.dirTextView.setText("Directors: Loading...");
+
+        // Fetch/set directors using ImdbUtils
+        Context context = holder.itemView.getContext();
+        ImdbUtils.fetchDirectors(context, movie.getId(), new ImdbUtils.DirectorFetchListener() {
+            @Override
+            public void onDirectorsFetched(String directors) {
+                holder.dirTextView.setText(directors);
+            }
+        });
 
         // Accessing plotData and plotText with null checks to get plainText (plot is here)
         String plotText = "No plot available";
@@ -74,6 +86,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             // If no image available, uses placeholder
             holder.movieImageView.setImageResource(R.drawable.ic_photo);
         }
+
         holder.itemView.setOnClickListener(v -> {
             Log.d(TAG, "Clicked movie ID: " + movie.getId());
             Dialog dialog = new Dialog(holder.itemView.getContext());
