@@ -25,6 +25,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -203,6 +208,14 @@ public class Dashboard extends BaseActivity {
                             Log.d(TAG, "Runtime fetched: " + runtimeData.getFormattedRuntime());
                         }
 
+                        // Fetching directors
+                        ImdbUtils.fetchDirectors(Dashboard.this, movie.getId(), new ImdbUtils.DirectorFetchListener() {
+                            @Override
+                            public void onDirectorsFetched(String directors) {
+                                TextView movieDirectorsTextView = dialog.findViewById(R.id.dash_dialog_movie_directors);
+                                movieDirectorsTextView.setText(directors);
+                            }
+                        });
                         // Updating the dialog with extracted movie details
                         updateDialogUI(dialog, movie);
                     } catch (IOException e) {
@@ -251,7 +264,17 @@ public class Dashboard extends BaseActivity {
         movieTitleTextView.setText(movie.getTitle());
         movieTypeTextView.setText("Type: " + movie.getType());
         movieStarsTextView.setText("Stars: " + movie.getStars());
-        movieDirectorsTextView.setText("Directors: " + movie.getDetails());
+
+        // Initially set directors text to "Loading..."
+        movieDirectorsTextView.setText("Directors: Loading...");
+
+        // Fetch and set directors using ImdbUtils
+        ImdbUtils.fetchDirectors(this, movie.getId(), new ImdbUtils.DirectorFetchListener() {
+            @Override
+            public void onDirectorsFetched(String directors) {
+                movieDirectorsTextView.setText(directors);
+            }
+        });
 
         // Initial setting
         moviePlotTextView.setText("Plot: N/A");

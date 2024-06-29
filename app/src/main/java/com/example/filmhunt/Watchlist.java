@@ -103,7 +103,16 @@ public class Watchlist extends BaseActivity {
         movieTitleTextView.setText(movie.getTitle());
         movieTypeTextView.setText("Type: " + movie.getType());
         movieStarsTextView.setText("Stars: " + movie.getStars());
-        movieDirectorsTextView.setText("Directors: " + movie.getDetails());
+        // Initially set directors text to "Loading..."
+        movieDirectorsTextView.setText("Directors: Loading...");
+
+        // Fetch and set directors using ImdbUtils
+        ImdbUtils.fetchDirectors(this, movie.getId(), new ImdbUtils.DirectorFetchListener() {
+            @Override
+            public void onDirectorsFetched(String directors) {
+                movieDirectorsTextView.setText(directors);
+            }
+        });
 
         String movieDetails = movie.getYear() + " • " +
                 (movie.getCertificateData() != null ? movie.getCertificateData().getRating() : "N/A") + " • " +
@@ -133,8 +142,6 @@ public class Watchlist extends BaseActivity {
             Toast.makeText(this, "Movie removed from watchlist", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
-
-
 
         dialog.show();
         history.add(movie);

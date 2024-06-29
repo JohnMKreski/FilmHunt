@@ -55,7 +55,17 @@ public class History extends BaseActivity {
         movieTitleTextView.setText(movie.getTitle());
         movieTypeTextView.setText("Type: " + movie.getType());
         movieStarsTextView.setText("Stars: " + movie.getStars());
-        movieDirectorsTextView.setText("Directors: " + movie.getDetails());
+
+        // Initially set directors text to "Loading..."
+        movieDirectorsTextView.setText("Directors: Loading...");
+
+        // Fetch and set directors using ImdbUtils
+        ImdbUtils.fetchDirectors(this, movie.getId(), new ImdbUtils.DirectorFetchListener() {
+            @Override
+            public void onDirectorsFetched(String directors) {
+                movieDirectorsTextView.setText(directors);
+            }
+        });
 
         String movieDetails = movie.getYear() + " • " +
                 (movie.getCertificateData() != null ? movie.getCertificateData().getRating() : "N/A") + " • " +
@@ -76,6 +86,9 @@ public class History extends BaseActivity {
         } else {
             movieImageView.setImageResource(R.drawable.ic_photo);
         }
+
+        // Fetching/setting directors
+//        ImdbUtils.fetchDirectors(History.this, movie.getId(), dialog, R.id.wat_dialog_movie_directors);
 
         dialog.show();
     }
